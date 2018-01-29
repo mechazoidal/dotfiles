@@ -1,12 +1,8 @@
 # from /opt/local/share/doc/mpv/examples/config-maintainer
 [default]
-profile=opengl-hq
-ao=coreaudio
-sub-scale=3
-af=scaletempo
-framedrop=vo
-hwdec=videotoolbox
-cache=50700
+
+hwdec=auto
+
 ytdl
 ytdl-format=best
 
