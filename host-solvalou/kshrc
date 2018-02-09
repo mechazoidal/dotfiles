@@ -1,11 +1,25 @@
-# ksh uses '.' , not 'source'
-#. "$HOME/.homesick/repos/homeshick/bin/homeshick.csh"
+# reminder: ksh uses '.' , not 'source'
 
-# https://stackoverflow.com/questions/1171663/how-to-custom-display-prompt-in-kornshell-to-show-hostname-and-current-directory
-PS1="${HOSTNAME}:\${PWD##*/} \$ "
+#https://stackoverflow.com/questions/1171663/how-to-custom-display-prompt-in-kornshell-to-show-hostname-and-current-directory
+# https://man.openbsd.org/ksh#PS1
 
-#PS1='${red}[${end}$(id -un)@\h${yellow}: ${end}$(date "+%a, %h-%d %l:%M%p")${red}]${end}\n${green}${PWD}${end}${yellow}/${end}'
+PS1="[\u@\h:\W]\$ "
 
 # http://superuser.com/questions/266534/using-readline-keyboard-shortcuts-in-osx-korn-shell#266542
-test -t 0 && set -o emacs
-export PATH=$HOME/bin:$HOME/workspace/inferno-os/OpenBSD/386/bin:$HOME/.gem/ruby/2.3/bin:$PATH
+#test -t 0 && set -o emacs
+#export PATH=$HOME/bin:$HOME/workspace/inferno-os/OpenBSD/386/bin:$HOME/.gem/ruby/2.3/bin:$PATH
+
+AUTOCONF_VERSION=2.69
+
+export AUTOCONF_VERSION
+
+GEM_HOME=/home/mecha/.gem/ruby/2.4
+export GEM_HOME
+
+# load completions
+. "$HOME/.ksh_completions"
+
+# activate history
+HISTFILE="$HOME/.ksh_history"
+# Note that openbsd ksh doesn't seem to have a pattern-ignore(like bash), and doesn't like multiples in this setting
+HISTCONTROL=ignoredups
