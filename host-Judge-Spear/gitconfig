@@ -1,0 +1,21 @@
+[user]
+	name = Scott Francis
+	email = scott@kurokoproject.com
+[core]
+	excludesfile = /Users/mecha/.gitignore_global
+	autocrlf = input
+	ignorecase = false
+	safecrlf = false
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[push]
+	default = simple
+[alias]
+  # Read-only share
+  serve = !git daemon --reuseaddr --base-path=. --export-all ./.git --verbose
+  # read/write share
+  hub = !git daemon --reuseaddr --base-path=. --export-all --enable=receive-pack --informative-errors --verbose
