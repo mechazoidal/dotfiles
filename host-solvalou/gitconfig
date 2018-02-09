@@ -1,0 +1,11 @@
+# This is Git's per-user configuration file.
+[user]
+	name = Scott Francis
+	email = scott@kurokoproject.com
+[push]
+	default = matching
+[alias]
+  # Read-only share
+  serve = !git daemon --reuseaddr --base-path=. --export-all ./.git --verbose
+  # read/write share
+  hub = !git daemon --reuseaddr --base-path=. --export-all --enable=receive-pack  --informative-errors --verbose
