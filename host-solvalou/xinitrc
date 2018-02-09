@@ -6,6 +6,7 @@ xset +fp /usr/local/share/fonts/ghostscript/
 xset +fp /usr/local/share/fonts/noto/
 xset +fp /usr/local/share/fonts/terminus/
 xset +fp /usr/local/share/fonts/inconsolata/
+xset +fp /usr/local/share/fonts/fira/
 xset fp rehash
 
 xrdb -merge $HOME/.Xdefaults
@@ -20,7 +21,7 @@ setxkbmap -option -option ctrl:nocaps
 
 eval $(ssh-agent)
 
-xscreensaver &
+xscreensaver -no-splash &
 
 dstat iwm0 &
 
