@@ -16,7 +16,7 @@ xrdb -merge $HOME/.Xdefaults
 setxkbmap -config /home/mecha/.xkb_config
 
 # Shifts when pressed alone type parentheses. When used with other keys they're normal shifts.
-xcape -e 'Shift_L=Shift_L|parenleft;Shift_R=Shift_L|parenright'
+xcape -t 300 -e 'Shift_L=Shift_L|parenleft;Shift_R=Shift_L|parenright'
 
 eval $(ssh-agent)
 
