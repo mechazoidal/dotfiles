@@ -7,17 +7,16 @@ xset +fp /usr/local/share/fonts/noto/
 xset +fp /usr/local/share/fonts/terminus/
 xset +fp /usr/local/share/fonts/inconsolata/
 xset +fp /usr/local/share/fonts/fira/
+xset +fp /usr/local/share/fonts/roboto
 xset fp rehash
 
 xrdb -merge $HOME/.Xdefaults
 
-#setxkbmap -option ctrl:swapcaps
-#setxkbmap -option ctrl:nocaps
-#setxkbmap -option ctrl:nocaps altwin:meta_win
-setxkbmap -option -option ctrl:nocaps
-# WARNING: NEITHER meta_win or left_meta_win WILL WORK, KEYS BECOME NONRESPONSIVE
-#setxkbmap -option -option ctrl:nocaps altwin:left_meta_win
-#altwin:left_meta_win
+# Must use external config to get multiple options: in this case, both nocaps and altwin
+setxkbmap -config /home/mecha/.xkb_config
+
+# Shifts when pressed alone type parentheses. When used with other keys they're normal shifts.
+xcape -e 'Shift_L=Shift_L|parenleft;Shift_R=Shift_L|parenright'
 
 eval $(ssh-agent)
 
