@@ -15,12 +15,25 @@ packadd minpac
 " FIXME needs GNU Make, so must be call to gmake, except do we need to guard
 " on other systems?
   call minpac#add('Shougo/vimproc.vim', {'do': 'silent! !gmake'})
+
+  " other unite plugins
   call minpac#add('osyo-manga/vim-anzu')
   call minpac#add('osyo-manga/unite-quickfix')
 
-  "call minpac#add('Valloric/YouCompleteMe', {'type': 'opt'})
-  "call minpac#add('SirVer/ultisnips')
-  call minpac#add('scrooloose/syntastic')
+  " completion (these require the 'neovim' python3 library globally
+  " available)
+  call minpac#add('Shougo/deoplete.nvim')
+  " since this is not neovim, we need adapters
+  call minpac#add('roxma/nvim-yarp')
+  call minpac#add('roxma/vim-hug-neovim-rpc')
+  call minpac#add('sebastianmarkow/deoplete-rust')
+
+  "in tandem with deoplete
+  call minpac#add('Shougo/neosnippet')
+  call minpac#add('Shougo/neosnippet-snippets')
+
+  " async linting
+  call minpac#add('w0rp/ale')
 
   " more in the spirit of vim than paredit
   call minpac#add('guns/vim-sexp')
@@ -32,6 +45,7 @@ packadd minpac
   call minpac#add('tpope/vim-unimpaired')
   call minpac#add('tpope/vim-fugitive')
   call minpac#add('tpope/vim-sexp-mappings-for-regular-people')
+  "call minpac#add('tpope/vim-fireplace')
   
   call minpac#add('vim-scripts/ag.vim')
   call minpac#add('kien/rainbow_parentheses.vim')
@@ -47,6 +61,7 @@ packadd minpac
   endif
   call minpac#add('Chiel92/vim-autoformat')
   
+  " only used for plaintext files
   call minpac#add('reedes/vim-lexical')
   call minpac#add('reedes/vim-wordy')
   
@@ -57,6 +72,14 @@ packadd minpac
 
   "call minpac#add('phleet/vim-mercenary')
   call minpac#add('ludovicchabant/vim-lawrencium')
+  call minpac#add('tpope/vim-endwise')
+  call minpac#add('tpope/vim-eunuch')
+  " Lua repl
+  call minpac#add('ujihisa/repl.vim')
+
+  " Rust support
+  call minpac#add('rust-lang/rust.vim')
+
 "endif
 
 " Define user commands for updating/cleaning the plugins.
@@ -65,7 +88,4 @@ packadd minpac
 " (note that ALL of your vimrc files MUST be reloadable)
 "command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update()
 "command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
-"let g:jedi#show_call_signatures = "2"
-"let g:jedi#show_call_signatures = 2
-"let g:jedi#completions_enabled = 0
 source ~/.vim/packages_config.vim

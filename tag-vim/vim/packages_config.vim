@@ -12,7 +12,10 @@ nnoremap <leader>a :Grepper -tool ag<cr>
 nnoremap <leader>r :Grepper -tool rg<cr>
 
 " gundo.vim
-nnoremap <F5> :GundoToggle<CR>
+nnoremap <leader>U :GundoToggle<CR>
+if has('python3')
+  let g:gundo_prefer_python3 = 1          
+endif
 
 " vimwiki
 nnoremap <silent> <leader>m :VimwikiToggleListItem<CR>
@@ -26,14 +29,6 @@ let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_tags': 1}]
 " Shougo/unite.vim
 "source ~/.vim/unite_config.vim
 source ~/.vim/unite_config2.vim
-"source ~/.vim/neocomplete_config.vim
-"source ~/.vim/neocomplete_config2.vim
-
-" youcompleteme
-"source ~/.vim/completion.vim
-"source ~/.vim/youcompleteme_conf.vim
-
-" scrooloose/syntastic
-source ~/.vim/syntastic_config.vim
-"source ~/.vim/ultisnips_config.vim
+" Shougo/deoplete.nvim
+source ~/.vim/deoplete_config.vim
 
