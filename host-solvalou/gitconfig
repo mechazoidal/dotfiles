@@ -9,3 +9,5 @@
   serve = !git daemon --reuseaddr --base-path=. --export-all ./.git --verbose
   # read/write share
   hub = !git daemon --reuseaddr --base-path=. --export-all --enable=receive-pack  --informative-errors --verbose
+[core]
+	excludesfile = /home/mecha/.gitignore_global
