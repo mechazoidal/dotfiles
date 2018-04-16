@@ -11,7 +11,7 @@ source ~/.vim/packages.vim
 
 " Reactivate filetypes after bundle mgmt.
 filetype plugin indent on
-set omnifunc=syntaxcomplete#Complete
+"set omnifunc=syntaxcomplete#Complete
 
 " I think this is automatically set?
 syntax on " syntax highlighting
@@ -81,6 +81,7 @@ set breakindentopt=shift:4,sbr " indenting them another level and showing 'showb
 "set showbreak=↪
 " with breakindent+relativenumber, display line movements unless preceded by a count
 " (and save movements larger than 5 lines to the jumplist)
+" TODO not sure if these are useful, and if they're causing slowdown
 nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
 nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
@@ -93,8 +94,6 @@ set synmaxcol=200
 
 " Show invisible characters(tab, EOL)
 set list
-" FIXME move this to gvimrc, as terminal use requires the font installed
-"set listchars=tab:▸\ ,eol:¬
 
 " Don't warn about files changing out from under us
 set autoread
@@ -112,8 +111,9 @@ vnoremap / /\v
 nnoremap <leader>, :noh<cr>
 
 " Match bracket pairs with <tab>
-nnoremap <tab> %
-vnoremap <tab> %
+" disabled to avoid conflict with deoplete
+"nnoremap <tab> %
+"vnoremap <tab> %
 
 " Make ; do the same thing as :
 nnoremap ; :
