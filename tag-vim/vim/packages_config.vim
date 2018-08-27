@@ -11,8 +11,6 @@ let g:rooter_silent_chdir = 1
 nnoremap <leader>a :Grepper -tool ag<cr>
 nnoremap <leader>r :Grepper -tool rg<cr>
 
-" gundo.vim
-nnoremap <F5> :GundoToggle<CR>
 
 " vimwiki
 nnoremap <silent> <leader>m :VimwikiToggleListItem<CR>
@@ -37,3 +35,9 @@ source ~/.vim/unite_config2.vim
 source ~/.vim/syntastic_config.vim
 "source ~/.vim/ultisnips_config.vim
 
+" undotree
+nnoremap <leader>U :UndotreeToggle<CR>
+if has("persistent_undo")
+  set undodir=~/.undodir/
+  set undofile
+endif
