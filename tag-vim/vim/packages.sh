@@ -44,6 +44,13 @@ https://github.com/reedes/vim-pencil
 https://github.com/farseer90718/vim-taskwarrior
 https://github.com/kien/rainbow_parentheses.vim
 https://github.com/sjl/gundo.vim
+https://github.com/Shougo/deoplete.nvim
+https://github.com/sebastianmarkow/deoplete-rust
+https://github.com/roxma/nvim-yarp
+https://github.com/roxma/vim-hug-neovim-rpc
+https://github.com/Shougo/neosnippet.vim
+https://github.com/Shougo/neosnippet-snippets
+https://github.com/w0rp/ale
 "
 
 for package_repo in $start
