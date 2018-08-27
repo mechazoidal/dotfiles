@@ -9,7 +9,7 @@ packadd vim-hug-neovim-rpc
 "let g:deoplete#enable_at_startup = 1
 call deoplete#enable()
 
-packadd neosnippet
+packadd neosnippet.vim
 packadd neosnippet-snippets
 
 " Plugin key-mappings.
