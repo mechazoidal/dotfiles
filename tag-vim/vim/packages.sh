@@ -9,7 +9,6 @@ fi
 start="
 https://github.com/vim-scripts/ag.vim
 https://github.com/mattn/emmet-vim
-https://github.com/sjl/gundo.vim
 https://github.com/Shougo/neomru.vim
 https://github.com/scrooloose/nerdcommenter
 https://github.com/rust-lang/rust.vim
@@ -32,6 +31,7 @@ https://github.com/tpope/vim-surround
 https://github.com/tpope/vim-unimpaired
 https://github.com/Shougo/vimproc.vim
 https://github.com/vimwiki/vimwiki
+https://github.com/mbbill/undotree
 "
 
 opt="
@@ -43,6 +43,14 @@ https://github.com/reedes/vim-wordy
 https://github.com/reedes/vim-pencil
 https://github.com/farseer90718/vim-taskwarrior
 https://github.com/kien/rainbow_parentheses.vim
+https://github.com/sjl/gundo.vim
+https://github.com/Shougo/deoplete.nvim
+https://github.com/sebastianmarkow/deoplete-rust
+https://github.com/roxma/nvim-yarp
+https://github.com/roxma/vim-hug-neovim-rpc
+https://github.com/Shougo/neosnippet.vim
+https://github.com/Shougo/neosnippet-snippets
+https://github.com/w0rp/ale
 "
 
 for package_repo in $start

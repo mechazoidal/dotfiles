@@ -11,11 +11,6 @@ let g:rooter_silent_chdir = 1
 nnoremap <leader>a :Grepper -tool ag<cr>
 nnoremap <leader>r :Grepper -tool rg<cr>
 
-" gundo.vim
-nnoremap <leader>U :GundoToggle<CR>
-if has('python3')
-  let g:gundo_prefer_python3 = 1          
-endif
 
 " vimwiki
 nnoremap <silent> <leader>m :VimwikiToggleListItem<CR>
@@ -32,3 +27,9 @@ source ~/.vim/unite_config2.vim
 " Shougo/deoplete.nvim
 source ~/.vim/deoplete_config.vim
 
+" undotree
+nnoremap <leader>U :UndotreeToggle<CR>
+if has("persistent_undo")
+  set undodir=~/.undodir/
+  set undofile
+endif

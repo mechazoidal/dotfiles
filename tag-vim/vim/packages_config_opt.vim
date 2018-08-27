@@ -47,3 +47,6 @@ let g:ale_lint_on_text_changed = "normal"
 
 " Disable completion for wiki files
 let g:ale_pattern_options = {'\.wiki$': {'ale_enabled': 0}}
+
+" gundo.vim
+nnoremap <F5> :GundoToggle<CR>
