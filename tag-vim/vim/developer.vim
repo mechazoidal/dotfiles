@@ -1,0 +1,85 @@
+" deoplete configuration
+" Do NOT mess with packadd/enable order for deoplete!
+packadd! deoplete.nvim
+packadd! deoplete-rust
+packadd! nvim-yarp
+packadd! vim-hug-neovim-rpc
+let g:deoplete#enable_at_startup = 1
+
+packadd! neosnippet.vim
+packadd! neosnippet-snippets
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <expr><TAB>
+ \ pumvisible() ? "\<C-n>" :
+ \ neosnippet#expandable_or_jumpable() ?
+ \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+" Don't allow autocomplete in vimwiki files
+autocmd FileType vimwiki
+       \ call deoplete#custom#buffer_option('auto_complete', v:false)
+
+packadd! ale
+source "~/.vim/ale.vim"
+
+
+let g:autocscope_menus = 1
+packadd! autoload_cscope.vim
+
+" use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
+" show msg when any other cscope db added
+set cscopetag cscopeverbose
+
+" check cscope for definition of a symbol before checking ctags: set to 1
+" if you want the reverse search order.
+set csto=0
+
+" Mappings
+" 's'   symbol: find all references to the token under cursor
+" 'g'   global: find global definition(s) of the token under cursor
+" 'c'   calls:  find all calls to the function name under cursor
+" 't'   text:   find all instances of the text under cursor
+" 'e'   egrep:  egrep search for the word under cursor
+" 'f'   file:   open the filename under cursor
+" 'i'   includes: find files that include the filename under cursor
+" 'd'   called: find functions that function under cursor calls
+
+nmap <Leader>cfs :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <Leader>cfg :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <Leader>cfc :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <Leader>cft :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <Leader>cfe :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <Leader>cff :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <Leader>cfi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <Leader>cfd :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+nmap <Leader>vfs :scs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <Leader>vfg :scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <Leader>vfc :scs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <Leader>vft :scs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <Leader>vfe :scs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <Leader>vff :scs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <Leader>vfi :scs find i <C-R>=expand("<cfile>")<CR>$<CR>
+nmap <Leader>vfd :scs find d <C-R>=expand("<cword>")<CR><CR>
+
+nmap <Leader>wfs :vert scs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <Leader>wfg :vert scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <Leader>wfc :vert scs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <Leader>wft :vert scs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <Leader>wfe :vert scs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <Leader>wff :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <Leader>wfi :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <Leader>wfd :vert scs find d <C-R>=expand("<cword>")<CR><CR>

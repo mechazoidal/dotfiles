@@ -17,15 +17,13 @@ nnoremap <silent> <leader>m :VimwikiToggleListItem<CR>
 vnoremap <silent> <leader>m :VimwikiToggleListItem<CR>
 let g:vimwiki_use_calendar = 1
 "let g:vimwiki_url_maxsave = 20
-"let g:vimwiki_conceallevel = 0
+let g:vimwiki_url_maxsave = 0
+"let g:vimwiki_conceallevel = 2
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_tags': 1}]
 
 
 " Shougo/unite.vim
-"source ~/.vim/unite_config.vim
-source ~/.vim/unite_config2.vim
-" Shougo/deoplete.nvim
-source ~/.vim/deoplete_config.vim
+source ~/.vim/unite_config.vim
 
 " undotree
 nnoremap <leader>U :UndotreeToggle<CR>

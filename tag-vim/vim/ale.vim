@@ -1,4 +1,3 @@
-packadd ale
 " ALE
 " quick activation toggle
 "let g:ale_enabled = 0
