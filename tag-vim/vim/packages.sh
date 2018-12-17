@@ -38,12 +38,8 @@ opt="
 https://github.com/vim-scripts/autoload_cscope.vim
 https://github.com/davidhalter/jedi-vim
 https://github.com/ludovicchabant/vim-lawrencium
-https://github.com/reedes/vim-lexical
-https://github.com/reedes/vim-wordy
-https://github.com/reedes/vim-pencil
 https://github.com/farseer90718/vim-taskwarrior
 https://github.com/kien/rainbow_parentheses.vim
-https://github.com/sjl/gundo.vim
 https://github.com/Shougo/deoplete.nvim
 https://github.com/sebastianmarkow/deoplete-rust
 https://github.com/roxma/nvim-yarp
@@ -51,6 +47,11 @@ https://github.com/roxma/vim-hug-neovim-rpc
 https://github.com/Shougo/neosnippet.vim
 https://github.com/Shougo/neosnippet-snippets
 https://github.com/w0rp/ale
+https://github.com/reedes/vim-lexical
+https://github.com/reedes/vim-wordy
+https://github.com/reedes/vim-pencil
+https://github.com/vim-scripts/Wordnet.vim
+https://github.com/sjl/gundo.vim
 "
 
 for package_repo in $start
@@ -81,3 +82,5 @@ do
     cd "$opt_target" && git clone "$package_repo.git"
   fi
 done
+
+#command! -nargs=0 -bar Helptags for p in glob('~/.vim/pack/mecha/opt/*', 1, 1) | exe 'packadd '.fnamemodify(p, ':t') | endfor | helptags ALL
