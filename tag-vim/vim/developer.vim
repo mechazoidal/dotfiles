@@ -126,3 +126,12 @@ packadd! rainbow_parentheses.vim
 "au Syntax * RainbowParenthesesLoadSquare
 "au Syntax * RainbowParenthesesLoadBraces
 nnoremap <leader>R :RainbowParenthesesToggle<CR>
+
+" Enable if you have eclim separately installed
+"source ~/.vim/eclim.vim
+
+" TODO is matchit still useful to us?
+" Load matchit.vim, but only if the user hasn't installed a newer version.
+" if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+"   runtime! macros/matchit.vim
+" endif

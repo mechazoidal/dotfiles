@@ -3,12 +3,9 @@ set nocompatible
 
 " Must deactivate filetype when loading bundle-mgmt
 " (the extra 'on' is to prevent errors in stock OSX vim)
+" TODO is this still needed
 filetype on
 filetype off
-
-" Load minpac bundle management
-"source ~/.vim/packages.vim
-"source ~/.vim/packages2.vim
 
 " Reactivate filetypes after bundle mgmt.
 filetype plugin indent on
@@ -111,11 +108,6 @@ vnoremap / /\v
 " Clear out search results
 nnoremap <leader>, :noh<cr>
 
-" Match bracket pairs with <tab>
-" disabled to avoid conflict with deoplete
-"nnoremap <tab> %
-"vnoremap <tab> %
-
 " Make ; do the same thing as :
 nnoremap ; :
 
@@ -181,10 +173,6 @@ augroup end
 " automatically equalize splits on resize
 autocmd VimResized * wincmd =
 
-if has('cscope')
-  source ~/.vim/cscope.vim
-endif
-
 " ?
 if has('')
   au BufWrite * :Autoformat
@@ -200,23 +188,24 @@ let filetype_inc='armasm'
 command Bd bp\|bd \#
 
 " Taken from vim manual
-function! CleverTab()
-   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-      return "\<Tab>"
-   else
-      return "\<C-N>"
-   endif
-endfunction
-" Shift-tab reverses if in a completion menu
-function! CleverTabR()
-   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-      return "\<Tab>"
-   else
-      return "\<C-P>"
-   endif
-endfunction
-inoremap <Tab> <C-R>=CleverTab()<CR>
-inoremap <S-Tab> <C-R>=CleverTabR()<CR>
+" (no work with deoplete)
+"function! CleverTab()
+"   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+"      return "\<Tab>"
+"   else
+"      return "\<C-N>"
+"   endif
+"endfunction
+"" Shift-tab reverses if in a completion menu
+"function! CleverTabR()
+"   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+"      return "\<Tab>"
+"   else
+"      return "\<C-P>"
+"   endif
+"endfunction
+"inoremap <Tab> <C-R>=CleverTab()<CR>
+"inoremap <S-Tab> <C-R>=CleverTabR()<CR>
 
 
 " http://vim.wikia.com/wiki/Toggle_to_open_or_close_the_quickfix_window
@@ -251,27 +240,9 @@ nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
 nmap <silent> <leader>q :call ToggleList("Quickfix List", 'c')<CR>
 
 
-" from sensible.vim
-" Load matchit.vim, but only if the user hasn't installed a newer version.
-" if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
-"   runtime! macros/matchit.vim
-" endif
-
-" only useful for writing text
-function! SpellCheckToggle()
-  if &spell == 0
-    setlocal spell
-    set spelllang=en_us
-    setlocal complete+=kspell
-  else
-    setlocal nospell
-    setlocal complete-=kspell
-  endif
-endfunction
-
-
 " load package-specific configs
 source ~/.vim/packages_config.vim
+"source ~/.vim/developer.vim
+source ~/.vim/writer.vim
 
-" Enable if you have eclim separately installed
-"source ~/.vim/eclim.vim
+
