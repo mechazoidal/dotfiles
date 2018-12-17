@@ -31,3 +31,10 @@ if has("persistent_undo")
   set undodir=~/.undodir/
   set undofile
 endif
+
+" taskwarrior.vim
+" TODO move plugin to /start
+nnoremap <leader>t :TW<return>
+let g:task_rc_override = 'rc.defaultwidth=0'
+let g:task_default_prompt = ['description', 'priority', 'tag']
+"let g:task_default_prompt = ['description', 'priority']
