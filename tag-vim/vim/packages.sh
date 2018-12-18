@@ -8,10 +8,8 @@ fi
 
 start="
 https://github.com/vim-scripts/ag.vim
-https://github.com/mattn/emmet-vim
 https://github.com/Shougo/neomru.vim
 https://github.com/scrooloose/nerdcommenter
-https://github.com/rust-lang/rust.vim
 https://github.com/vim-scripts/scratch.vim
 https://github.com/tpope/tpope-vim-abolish
 https://github.com/osyo-manga/unite-quickfix
@@ -25,8 +23,6 @@ https://github.com/tpope/vim-fugitive
 https://github.com/mhinz/vim-grepper
 https://github.com/tpope/vim-repeat
 https://github.com/airblade/vim-rooter
-https://github.com/guns/vim-sexp
-https://github.com/tpope/vim-sexp-mappings-for-regular-people
 https://github.com/tpope/vim-surround
 https://github.com/tpope/vim-unimpaired
 https://github.com/Shougo/vimproc.vim
@@ -36,6 +32,8 @@ https://github.com/mbbill/undotree
 
 opt="
 https://github.com/vim-scripts/autoload_cscope.vim
+https://github.com/mattn/emmet-vim
+https://github.com/rust-lang/rust.vim
 https://github.com/davidhalter/jedi-vim
 https://github.com/ludovicchabant/vim-lawrencium
 https://github.com/farseer90718/vim-taskwarrior
@@ -51,7 +49,8 @@ https://github.com/reedes/vim-lexical
 https://github.com/reedes/vim-wordy
 https://github.com/reedes/vim-pencil
 https://github.com/vim-scripts/Wordnet.vim
-https://github.com/sjl/gundo.vim
+https://github.com/guns/vim-sexp
+https://github.com/tpope/vim-sexp-mappings-for-regular-people
 "
 
 for package_repo in $start
