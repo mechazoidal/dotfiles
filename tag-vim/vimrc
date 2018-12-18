@@ -1,15 +1,5 @@
-" No need to conform to vi
-set nocompatible
-
-" Must deactivate filetype when loading bundle-mgmt
-" (the extra 'on' is to prevent errors in stock OSX vim)
-" TODO is this still needed
-filetype on
-filetype off
-
-" Reactivate filetypes after bundle mgmt.
+" Activate plugin and indent 
 filetype plugin indent on
-"set omnifunc=syntaxcomplete#Complete
 
 " I think this is automatically set?
 syntax on " syntax highlighting
@@ -17,8 +7,7 @@ syntax on " syntax highlighting
 " Nobody really needs modelines, especially with security issue
 set modelines=0
 
-" Set tabstops globally instead of using after/ftplugin
-set tabstop=2
+" Don't fiddle with tabstop, just customize shiftwidth/softtabs
 set shiftwidth=2
 set softtabstop=2
 set expandtab
@@ -96,6 +85,8 @@ set list
 " Don't warn about files changing out from under us
 set autoread
 
+" Default spelling is US English
+set spelllang=en_us
 
 " Key mappings
 " Change leader
@@ -111,8 +102,6 @@ nnoremap <leader>, :noh<cr>
 " Make ; do the same thing as :
 nnoremap ; :
 
-" Autosave on losing focus
-au FocusLost * :wa
 
 if has('macunix')
   " Disable middle mouse to avoid pasting problems on OSX
@@ -134,8 +123,13 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" Default augroup for autocmds defined in vimrc
+augroup vimrc
+  autocmd!
+augroup end
+
 " force detection of *.md to Markdown, not modula-2
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd vimrc BufNewFile,BufReadPost *.md set filetype=markdown
 
 " fold tags with ,ft
 "nnoremap <leader>ft Vatzf
@@ -145,15 +139,18 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 
 " vp doesn't replace paste buffer
-function! RestoreRegister()
+function! RestoreRegister() abort
   let @" = s:restore_reg
   return ''
 endfunction
-function! s:Repl()
+function! s:Repl() abort
   let s:restore_reg = @"
   return "p@=RestoreRegister()\<cr>"
 endfunction
 vmap <silent> <expr> p <sid>Repl()
+
+" Autosave on losing focus
+autocmd vimrc FocusLost * :wa
 
 " SWP files and friends
 " Write undo/swap files to a vim-specific temp dir
@@ -171,17 +168,15 @@ augroup AutomaticSwapRecoveryAndDelete
 augroup end
 
 " automatically equalize splits on resize
-autocmd VimResized * wincmd =
+autocmd vimrc VimResized * wincmd =
 
 " ?
-if has('')
-  au BufWrite * :Autoformat
-  let g:autoformat_autoindent = 0
-  let g:autoformat_retab = 0
-endif
+"if has('')
+  "au BufWrite * :Autoformat
+  "let g:autoformat_autoindent = 0
+  "let g:autoformat_retab = 0
+"endif
 
-let asmsyntax='armasm'
-let filetype_inc='armasm'
 
 
 " kill buffer without closing split
@@ -209,14 +204,14 @@ command Bd bp\|bd \#
 
 
 " http://vim.wikia.com/wiki/Toggle_to_open_or_close_the_quickfix_window
-function! GetBufferList()
+function! GetBufferList() abort
   redir =>buflist
   silent! ls!
   redir END
   return buflist
 endfunction
 
-function! ToggleList(bufname, pfx)
+function! ToggleList(bufname, pfx) abort
   let buflist = GetBufferList()
   for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
     if bufwinnr(bufnum) != -1
@@ -241,8 +236,11 @@ nmap <silent> <leader>q :call ToggleList("Quickfix List", 'c')<CR>
 
 
 " load package-specific configs
+" FIXME should use plugin/after instead
 source ~/.vim/packages_config.vim
+"runtime ~/.vim/packages_config.vim
 "source ~/.vim/developer.vim
 source ~/.vim/writer.vim
+"runtime ~/.vim/writer.vim
 
 
