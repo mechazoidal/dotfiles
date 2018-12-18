@@ -1,8 +1,10 @@
-packadd! vim-pencil
+" Built-in vim settings
+"
+set completeopt=longest,menuone
+"set complete+=kspell
 
-setlocal spell
-set spelllang=en_us
-setlocal complete+=kspell
+" Plugins
+packadd! vim-pencil
 
 " TODO get lexical options from packages_config_opt
 
@@ -23,12 +25,11 @@ augroup lexical
   autocmd FileType markdown,mkd call lexical#init()
   autocmd FileType textile call lexical#init()
   autocmd FileType text call lexical#init({ 'spell': 0 })
-  autocmd FileType vimwiki call lexical#init()
+  autocmd FileType vimwiki call lexical#init({ 'spell': 0 })
 augroup END
 
-" temp
-" https://raw.githubusercontent.com/words/moby/master/words.txt
-let g:lexical#thesaurus = ['~/src/moby/words.txt',]
+" vim-lexical thesaurus default
+" ( curl https://raw.githubusercontent.com/words/moby/master/words.txt --create-dirs -o ~/.vim/thesaurus/mthesaur.txt ) 
 
 " no configuration needed
 packadd! Wordnet.vim

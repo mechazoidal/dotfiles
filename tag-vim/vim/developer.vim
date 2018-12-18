@@ -135,3 +135,7 @@ nnoremap <leader>R :RainbowParenthesesToggle<CR>
 " if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
 "   runtime! macros/matchit.vim
 " endif
+
+" default ASM
+let asmsyntax='armasm'
+let filetype_inc='armasm'
