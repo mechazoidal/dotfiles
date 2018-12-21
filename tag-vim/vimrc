@@ -1,8 +1,9 @@
 " Activate plugin and indent 
 filetype plugin indent on
 
-" I think this is automatically set?
-syntax on " syntax highlighting
+" syntax highlighting, keep existing color settings
+syntax enable 
+"syntax on 
 
 " Nobody really needs modelines, especially with security issue
 set modelines=0
@@ -25,7 +26,6 @@ set wildmode=longest,list " bash
 "set wildmode=longest:full,full " another bash?
 set wildmenu
 set visualbell
-"set cursorline
 set ttyfast
 set ruler
 set backspace=indent,eol,start
@@ -138,17 +138,6 @@ autocmd vimrc BufNewFile,BufReadPost *.md set filetype=markdown
 "nnoremap <leader>v V`]
 
 
-" vp doesn't replace paste buffer
-function! RestoreRegister() abort
-  let @" = s:restore_reg
-  return ''
-endfunction
-function! s:Repl() abort
-  let s:restore_reg = @"
-  return "p@=RestoreRegister()\<cr>"
-endfunction
-vmap <silent> <expr> p <sid>Repl()
-
 " Autosave on losing focus
 autocmd vimrc FocusLost * :wa
 
@@ -161,22 +150,13 @@ set viminfo+=n~/.vtemp/viminfo
 " Skip /tmp and /private since changing anything there needs edit-in-place
 set backupskip=/tmp/*,/private/tmp/*
 " Automatically recover+delete swap files if reopening after a crash
-augroup AutomaticSwapRecoveryAndDelete
-    autocmd!
+augroup vimrc AutomaticSwapRecoveryAndDelete
     autocmd SwapExists * :let v:swapchoice = 'r' | let b:swapname = v:swapname
     autocmd BufWinEnter * :if exists("b:swapname") | call delete(b:swapname) | unlet b:swapname | endif
 augroup end
 
 " automatically equalize splits on resize
 autocmd vimrc VimResized * wincmd =
-
-" ?
-"if has('')
-  "au BufWrite * :Autoformat
-  "let g:autoformat_autoindent = 0
-  "let g:autoformat_retab = 0
-"endif
-
 
 
 " kill buffer without closing split
@@ -203,6 +183,8 @@ command Bd bp\|bd \#
 "inoremap <S-Tab> <C-R>=CleverTabR()<CR>
 
 
+" FIXME because these are called from vimrc, they don't seem to work if moved
+" to an autoload script
 " http://vim.wikia.com/wiki/Toggle_to_open_or_close_the_quickfix_window
 function! GetBufferList() abort
   redir =>buflist
@@ -234,13 +216,4 @@ endfunction
 nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
 nmap <silent> <leader>q :call ToggleList("Quickfix List", 'c')<CR>
 
-
-" load package-specific configs
-" FIXME should use plugin/after instead
-source ~/.vim/packages_config.vim
-"runtime ~/.vim/packages_config.vim
-"source ~/.vim/developer.vim
-source ~/.vim/writer.vim
-"runtime ~/.vim/writer.vim
-
-
+" TODO move+load developer.vim to/from plugin/

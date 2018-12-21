@@ -23,7 +23,25 @@ let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_tags': 1}]
 
 
 " Shougo/unite.vim
-source ~/.vim/unite_config.vim
+" Use unite.vim and ag to find files quickly
+let g:unite_source_history_yank_enable = 1
+
+" Fuzzy-search for a file in the current working directory
+nnoremap <Leader>f :<C-u>Unite -start-insert file_rec/async:!<cr>
+" (version without async, incase you don't have it available
+"nnoremap <Leader><Leader> :<C-u>Unite -start-insert file_rec<cr>
+
+" Fuzzy-search for a file in the MRU cache
+nnoremap <Leader>e :<C-u>Unite -start-insert file_mru<cr>
+
+" open buffer list(easybuffer replacement)
+nnoremap <leader>` :<C-u>Unite buffer<cr>
+
+" requires vim-anzu
+" enables unite buffer of current regex search
+nnoremap <leader>/ :<C-u>Unite anzu<cr>
+"end unite
+
 
 " undotree
 nnoremap <leader>U :UndotreeToggle<CR>
