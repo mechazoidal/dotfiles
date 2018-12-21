@@ -83,3 +83,4 @@ do
 done
 
 #command! -nargs=0 -bar Helptags for p in glob('~/.vim/pack/mecha/opt/*', 1, 1) | exe 'packadd '.fnamemodify(p, ':t') | endfor | helptags ALL
+#curl https://raw.githubusercontent.com/words/moby/master/words.txt --create-dirs -o ~/.vim/thesaurus/mthesaur.txt 
