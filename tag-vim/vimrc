@@ -20,10 +20,7 @@ set autoindent
 set showmode
 set showcmd
 set hidden
-"set wildmode=list:longest "original
-"set wildmode=longest,list,full "fullest
-set wildmode=longest,list " bash
-"set wildmode=longest:full,full " another bash?
+set wildmode=longest:full,full
 set wildmenu
 set visualbell
 set ttyfast
