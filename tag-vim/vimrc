@@ -86,7 +86,6 @@ set autoread
 set spelllang=en_us
 
 " Key mappings
-" Change leader
 let mapleader = "\<Space>"
 
 " Change default regex to use \v
@@ -159,25 +158,20 @@ autocmd vimrc VimResized * wincmd =
 " kill buffer without closing split
 command Bd bp\|bd \#
 
-" Taken from vim manual
-" (no work with deoplete)
-"function! CleverTab()
-"   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-"      return "\<Tab>"
-"   else
-"      return "\<C-N>"
-"   endif
-"endfunction
-"" Shift-tab reverses if in a completion menu
-"function! CleverTabR()
-"   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-"      return "\<Tab>"
-"   else
-"      return "\<C-P>"
-"   endif
-"endfunction
-"inoremap <Tab> <C-R>=CleverTab()<CR>
-"inoremap <S-Tab> <C-R>=CleverTabR()<CR>
+" TRIAL
+" from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
+" THis is a slightly smarter tab-complete. It moves backwards in the menu to
+" avoid trickery with sending C-N after a Tab
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<Tab>"
+    else
+        return "\<C-P>"
+    endif
+endfunction
+inoremap <expr> <Tab> InsertTabWrapper()
+inoremap <S-Tab> <C-N>
 
 
 " FIXME because these are called from vimrc, they don't seem to work if moved
