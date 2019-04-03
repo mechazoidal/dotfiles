@@ -3,8 +3,14 @@
 
 hwdec=auto
 
+# if you need to use CPU filters or others, this setting allows HW playback IF it copies the frame back to system memory
+#hwdec=auto-copy
+
 ytdl
 ytdl-format=best
 
 # swf: Keep starting volume sane
 volume=40
+
+# Always choose english subtitles
+slang=en
