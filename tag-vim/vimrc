@@ -1,9 +1,19 @@
-" Activate plugin and indent 
-filetype plugin indent on
+" opt into Vim 8’s new defaults
+" see `:help defaults.vim`
+unlet! skip_defaults_vim
+if filereadable($VIMRUNTIME . '/defaults.vim')
+  source $VIMRUNTIME/defaults.vim
+endif
+
+" Personal settings from pre-8
+"filetype plugin indent on
+"set ruler
+"set showcmd
+"set wildmenu
+"set incsearch
 
 " syntax highlighting, keep existing color settings
 syntax enable 
-"syntax on 
 
 " Nobody really needs modelines, especially with security issue
 set modelines=0
@@ -18,13 +28,10 @@ set encoding=utf-8
 set scrolloff=3
 set autoindent
 set showmode
-set showcmd
 set hidden
 set wildmode=longest:full,full
-set wildmenu
 set visualbell
 set ttyfast
-set ruler
 set backspace=indent,eol,start
 set laststatus=2
 " set relativenumber " requires Vim 7.3!
@@ -52,7 +59,6 @@ set ignorecase
 set gdefault
 
 " Highlite search results incrementally
-set incsearch
 set showmatch
 set hlsearch
 
@@ -156,7 +162,7 @@ autocmd vimrc VimResized * wincmd =
 
 
 " kill buffer without closing split
-command Bd bp\|bd \#
+"command Bd bp\|bd \#
 
 " TRIAL
 " from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
@@ -218,3 +224,7 @@ augroup lexical
 augroup END
 
 " TODO move+load developer.vim to/from plugin/
+
+" courtesy of steve losh
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
