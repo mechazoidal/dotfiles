@@ -228,3 +228,11 @@ augroup END
 " courtesy of steve losh
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" Enable matchit plugin for better '%' usage
+packadd! matchit
+
+" Ruby and others don't play nice with the newer regex engine
+" TODO it'd be nice to have this on a per-language or per-file basis,
+" but I don't think you can! Not sure what the new engine is good for.
+set regexpengine=1
