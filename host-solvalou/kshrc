@@ -9,14 +9,10 @@ PS1="[\u@\h:\W]\$ "
 #test -t 0 && set -o emacs
 #export PATH=$HOME/bin:$HOME/workspace/inferno-os/OpenBSD/386/bin:$HOME/.gem/ruby/2.3/bin:$PATH
 
+# TODO this was just to fix some bad-behaving builds, do I still need it?
 AUTOCONF_VERSION=2.69
 
 export AUTOCONF_VERSION
-
-GEM_HOME=/home/mecha/.gem/ruby/2.4
-export GEM_HOME
-# This ensures that gem executables(like bundler) get picked up
-export PATH=$PATH:$GEM_HOME/bin
 
 # load completions
 . "$HOME/.ksh_completions"
@@ -26,33 +22,3 @@ HISTFILE="$HOME/.ksh_history"
 # Note that openbsd ksh doesn't seem to have a pattern-ignore(like bash), and doesn't like multiples in this setting
 HISTCONTROL=ignoredups
 
-# java
-JAVA_HOME=/usr/local/jdk-1.8.0
-export JAVA_HOME
-export PATH=$PATH:$JAVA_HOME/bin
-
-# clojure
-CLJ_HOME=/home/mecha/clojure
-export CLJ_HOME
-export PATH=$PATH:$CLJ_HOME/bin
-
-SAM_HOME=/home/mecha/sam
-export SAM_HOME
-export PATH=$PATH:/$SAM_HOME/bin
-
-# luarocks setup
-export LUA_PATH='/home/mecha/.luarocks/share/lua/5.1/?.lua;/home/mecha/.luarocks/share/lua/5.1/?/init.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;./?.lua;/usr/local/lib/lua/5.1/?.lua;/usr/local/lib/lua/5.1/?/init.lua'
-export LUA_CPATH='/home/mecha/.luarocks/lib/lua/5.1/?.so;/usr/local/lib/lua/5.1/?.so;./?.so;/usr/local/lib/lua/5.1/loadall.so'
-export LUA_BIN='/home/mecha/.luarocks/bin'
-export PATH=$PATH:/$LUA_BIN
-
-#OPAM / OCaml setup
-#export OPAMNOASPCUD=1
-#eval `opam config env`
-
-# Rust setup
-export RUST_BIN=$HOME/.cargo/bin
-# for racer support
-export RUST_VERSION=1.24.0
-export RUST_SRC_PATH=$HOME/src/rustc-$RUST_VERSION-src/src
-export PATH=$PATH:/$RUST_BIN

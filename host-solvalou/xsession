@@ -1,0 +1,50 @@
+# X config
+#xset +fp /usr/local/share/fonts/ghostscript/
+#xset +fp /usr/local/share/fonts/Droid/
+#xset +fp /usr/local/share/fonts/terminus/
+#xset +fp /usr/local/share/fonts/Inconsolata/
+xset +fp /usr/local/share/fonts/ghostscript/
+xset +fp /usr/local/share/fonts/noto/
+xset +fp /usr/local/share/fonts/terminus/
+xset +fp /usr/local/share/fonts/inconsolata/
+xset +fp /usr/local/share/fonts/fira/
+xset +fp /usr/local/share/fonts/roboto
+xset fp rehash
+
+# load Xdefaults(Xresources) file
+xrdb -merge $HOME/.Xdefaults
+
+# Must use external config to get multiple options: in this case, both nocaps and altwin
+setxkbmap -config $HOME/.config/xkb/config
+
+# Shifts when pressed alone type parentheses. When used with other keys they're normal shifts.
+xcape -t 300 -e 'Shift_L=Shift_L|parenleft;Shift_R=Shift_L|parenright'
+
+eval $(ssh-agent)
+
+
+# Must set extra command paths here for X11 apps (like gvim)
+export PATH=$HOME/bin:$PATH
+RUBY_VERSION=2.6
+GEM_HOME=${HOME}/.gem/ruby/$RUBY_VERSION
+export GEM_HOME
+# This ensures that gem executables(like bundler) get picked up
+export PATH=$PATH:$GEM_HOME/bin
+
+# java
+JAVA_HOME=/usr/local/jdk-1.8.0
+export JAVA_HOME
+export PATH=$PATH:$JAVA_HOME/bin
+
+# clojure
+CLJ_HOME=${HOME}/clojure
+export CLJ_HOME
+export PATH=$PATH:$CLJ_HOME/bin
+
+# screen locker
+# xidle &
+
+dstat iwm0 &
+
+# exec window manager
+dwm
