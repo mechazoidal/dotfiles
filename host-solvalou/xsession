@@ -41,6 +41,10 @@ CLJ_HOME=${HOME}/clojure
 export CLJ_HOME
 export PATH=$PATH:$CLJ_HOME/bin
 
+# This ensures that cargo-installed executables(like rg) get picked up
+export RUST_BIN=$HOME/.cargo/bin
+export PATH=$PATH:/$RUST_BIN
+
 # screen locker
 # xidle &
 
