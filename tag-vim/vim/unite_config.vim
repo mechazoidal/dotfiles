@@ -1,7 +1,7 @@
+" OBSOLETE: maintained only for historical/facme purposes
+
 " Use unite.vim and ag to find files quickly
 let g:unite_source_history_yank_enable = 1
-" TODO is this already the default?
-"call unite#filters#matcher_default#use(['matcher_fuzzy'])
 
 " Fuzzy-search for a file in the current working directory
 nnoremap <Leader>f :<C-u>Unite -start-insert file_rec/async:!<cr>
