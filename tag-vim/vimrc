@@ -235,4 +235,12 @@ packadd! matchit
 " Make Y apply from cursor to end of line
 nnoremap Y y$
 
+" The core fzf plugin needs to be enabled BEFORE the fzf.vim package is loaded
+" (the conditional is just a kludge to test if we're on osx or a unix)
+if isdirectory('/opt')
+  set rtp+=/opt/local/share/fzf/vim/
+else
+  set rtp+=/usr/local/share/fzf/vim
+endif
+
 " All other extra configs (and plugins) are in ~/.vim/plugin/config.vim
