@@ -3,7 +3,7 @@
 target="$HOME/.vim/pack/$USER"
 
 # FIXME ksh-specific for now
-. "$HOME/.vim/package_list.sh"
+. "$HOME/.vim/packages.sh"
 
 if [[ ! ( -e $target && -d $target ) ]]
 then
