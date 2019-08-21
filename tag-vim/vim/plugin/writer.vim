@@ -9,10 +9,6 @@ packadd! vim-pencil
 " vim-lexical thesaurus default
 " ( curl https://raw.githubusercontent.com/words/moby/master/words.txt --create-dirs -o ~/.vim/thesaurus/mthesaur.txt ) 
 
-" no configuration needed
-packadd! Wordnet.vim
-" wordnet locations:
-" openbsd: /usr/local/share/wordnet/
 
 " no configuration needed
 packadd! vim-wordy
