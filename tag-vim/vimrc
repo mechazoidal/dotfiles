@@ -5,13 +5,6 @@ if filereadable($VIMRUNTIME . '/defaults.vim')
   source $VIMRUNTIME/defaults.vim
 endif
 
-" Personal settings from pre-8
-"filetype plugin indent on
-"set ruler
-"set showcmd
-"set wildmenu
-"set incsearch
-
 " syntax highlighting, keep existing color settings
 syntax enable 
 
@@ -230,9 +223,16 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Enable matchit plugin for better '%' usage
+" (it is supplied with vim as of 8+: $VIMRUNTIME/pack/dist/opt/matchit)
 packadd! matchit
 
-" Ruby and others don't play nice with the newer regex engine
+" Ruby (and others?) don't play nice with the newer regex engine
 " TODO it'd be nice to have this on a per-language or per-file basis,
-" but I don't think you can! Not sure what the new engine is good for.
-set regexpengine=1
+" but I don't think you can!
+"set regexpengine=1
+
+
+" Make Y apply from cursor to end of line
+nnoremap Y y$
+
+" All other extra configs (and plugins) are in ~/.vim/plugin/config.vim
