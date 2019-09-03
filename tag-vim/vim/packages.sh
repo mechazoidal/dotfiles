@@ -26,6 +26,7 @@ https://github.com/vim-scripts/ag.vim
 https://github.com/vim-scripts/scratch.vim
 https://github.com/vimwiki/vimwiki
 https://github.com/autozimu/LanguageClient-neovim/
+https://github.com/tbabej/taskwiki
 "
 
 opt="
