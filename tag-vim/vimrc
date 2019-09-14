@@ -104,6 +104,9 @@ if has('macunix')
   imap <MiddleMouse> <Nop>
 end
 
+" change all smart quotes to their ascii equivs(", ')
+" (does not use /g since 'gdefault' is now always on)
+nnoremap <leader>Q :%s/\%u201c/"/<cr>:%s/\%u201d/"/<cr>:%s/\%u2019/'/<cr>:%s/\%u2018/'/<cr>:let @/=''<CR>
 " strip all trailing whitespace in the current file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 " use jj to exit insert mode
@@ -117,6 +120,9 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" Allow '~' to be used as an operator
+set tildeop
 
 " Default augroup for autocmds defined in vimrc
 augroup vimrc
@@ -216,6 +222,7 @@ augroup lexical
   autocmd FileType vimwiki call lexical#init({ 'spell': 0 })
 augroup END
 
+
 " TODO move+load developer.vim to/from plugin/
 
 " courtesy of steve losh
@@ -243,4 +250,10 @@ else
   set rtp+=/usr/local/share/fzf/vim
 endif
 
+
+"nnoremap <leader>iw :put =strftime('%U')<cr>
+"nnoremap <leader>id :put =strftime('%A')<cr>
+nnoremap <leader>id :put =strftime('%Y%m%d')<cr>
+
 " All other extra configs (and plugins) are in ~/.vim/plugin/config.vim
+
