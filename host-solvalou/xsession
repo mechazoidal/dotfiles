@@ -1,8 +1,5 @@
 # X config
-#xset +fp /usr/local/share/fonts/ghostscript/
 #xset +fp /usr/local/share/fonts/Droid/
-#xset +fp /usr/local/share/fonts/terminus/
-#xset +fp /usr/local/share/fonts/Inconsolata/
 xset +fp /usr/local/share/fonts/ghostscript/
 xset +fp /usr/local/share/fonts/noto/
 xset +fp /usr/local/share/fonts/terminus/
@@ -19,9 +16,6 @@ setxkbmap -config $HOME/.config/xkb/config
 
 # Shifts when pressed alone type parentheses. When used with other keys they're normal shifts.
 xcape -t 300 -e 'Shift_L=Shift_L|parenleft;Shift_R=Shift_L|parenright'
-
-eval $(ssh-agent)
-
 
 # Must set extra command paths here for X11 apps (like gvim)
 export PATH=$HOME/bin:$PATH
@@ -45,7 +39,13 @@ export PATH=$PATH:$CLJ_HOME/bin
 export RUST_BIN=$HOME/.cargo/bin
 export PATH=$PATH:/$RUST_BIN
 
+# yarn setup
+export YARN_BIN=$HOME/yarn/bin
+export YARN_USER_BIN=`$HOME/yarn/bin/yarn global bin`
+export PATH=$PATH:$YARN_BIN:$YARN_USER_BIN
+
 # screen locker
+# (unused for now due to incident where it failed to UNLOCK on lid-open)
 # xidle &
 
 dstat iwm0 &

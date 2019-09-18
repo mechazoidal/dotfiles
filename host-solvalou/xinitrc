@@ -1,3 +1,4 @@
+# OBSOLETE on solvalou: see ~/.xsession instead
 #xset +fp /usr/local/share/fonts/ghostscript/
 #xset +fp /usr/local/share/fonts/Droid/
 #xset +fp /usr/local/share/fonts/terminus/
@@ -19,8 +20,6 @@ setxkbmap -config /home/mecha/.config/xkb/config
 
 # Shifts when pressed alone type parentheses. When used with other keys they're normal shifts.
 xcape -t 300 -e 'Shift_L=Shift_L|parenleft;Shift_R=Shift_L|parenright'
-
-eval $(ssh-agent)
 
 # screen locker
 xidle &
