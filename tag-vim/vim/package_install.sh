@@ -22,7 +22,7 @@ do
   if [[ ! ( -e "$start_target/$package" && -d "$start_target/$package" ) ]]
   then
     echo "$package_repo.git"
-    cd "$start_target" && git clone "$package_repo.git"
+    cd "$start_target" && git clone --depth 1 "$package_repo.git"
   fi
 done
 
@@ -36,7 +36,7 @@ do
   package=$(basename "$package_repo")
   if [[ ! ( -e "$opt_target/$package" && -d "$opt_target/$package" ) ]]
   then
-    cd "$opt_target" && git clone "$package_repo.git"
+    cd "$opt_target" && git clone --depth 1 "$package_repo.git"
   fi
 done
 
