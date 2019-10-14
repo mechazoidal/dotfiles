@@ -1,0 +1,5 @@
+# suppress duplicate commands, 'ls' without any arguments, and 'bg', 'fg', 'exit'
+export HISTIGNORE="&:ls:[bf]g:exit"
+
+# ensure gdb has a central history file
+export GDBHISTFILE="~/.gdb_history"

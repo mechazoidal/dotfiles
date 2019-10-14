@@ -1,0 +1,19 @@
+# Taskwarrior
+alias t='task'
+alias ta='task add'
+alias tas='task add pro:self'
+alias tab='task add pro:self.badideas'
+alias tan='task annotate'
+alias tm='task modify'
+
+# Taskwarrior reports
+alias tt='task modified:today completed'
+alias ty='task modified:yesterday completed'
+alias tey='task end.after:yesterday completed'
+
+# Timewarrior
+alias twst='timew start'
+alias twstop='timew stop'
+alias tws='timew summary :week'
+alias twlw='timew summary :lastweek'
+alias twd='timew summary :day'
