@@ -3,22 +3,24 @@
 # Source this file from a separate script to use
 
 start="
-https://github.com/ConradIrwin/vim-bracketed-paste
-https://github.com/Shougo/echodoc.vim
+https://github.com/SirVer/ultisnips
 https://github.com/airblade/vim-rooter
 https://github.com/blindFS/vim-taskwarrior
-https://github.com/guns/vim-sexp
+https://github.com/ervandew/supertab
+https://github.com/honza/vim-snippets
 https://github.com/junegunn/fzf.vim
 https://github.com/mbbill/undotree
 https://github.com/mhinz/vim-grepper
-https://github.com/scrooloose/nerdcommenter
 https://github.com/tpope/tpope-vim-abolish
+https://github.com/tpope/vim-apathy
+https://github.com/tpope/vim-commentary
 https://github.com/tpope/vim-dispatch
 https://github.com/tpope/vim-endwise
 https://github.com/tpope/vim-eunuch
 https://github.com/tpope/vim-fugitive
+https://github.com/tpope/vim-jdaddy
 https://github.com/tpope/vim-repeat
-https://github.com/tpope/vim-sexp-mappings-for-regular-people
+https://github.com/tpope/vim-sleuth 
 https://github.com/tpope/vim-surround
 https://github.com/tpope/vim-unimpaired
 https://github.com/tpope/vim-vinegar
@@ -26,7 +28,6 @@ https://github.com/vim-scripts/ag.vim
 https://github.com/vim-scripts/scratch.vim
 https://github.com/vimwiki/vimwiki
 https://github.com/autozimu/LanguageClient-neovim
-https://github.com/tbabej/taskwiki
 "
 
 opt="
@@ -52,4 +53,8 @@ https://github.com/rust-lang/rust.vim
 https://github.com/sebastianmarkow/deoplete-rust
 https://github.com/vim-scripts/autoload_cscope.vim
 https://github.com/w0rp/ale
+https://github.com/Shougo/echodoc.vim
+https://github.com/guns/vim-sexp
+https://github.com/tbabej/taskwiki
+https://github.com/tpope/vim-sexp-mappings-for-regular-people
 "

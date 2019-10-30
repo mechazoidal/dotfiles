@@ -10,6 +10,10 @@ let g:rooter_silent_chdir = 1
 
 
 " vim-grepper
+" Use smart-case for rg
+runtime plugin/grepper.vim
+let g:grepper.rg.grepprg .= ' --smart-case'
+" mappings
 nnoremap <leader>a :Grepper -tool ag<cr>
 nnoremap <leader>r :Grepper -tool rg<cr>
 " Enables using "gs" as an operator to populate the search prompt
@@ -26,7 +30,7 @@ let g:vimwiki_use_calendar = 1
 let g:vimwiki_url_maxsave = 0
 "let g:vimwiki_conceallevel = 2
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_tags': 1}]
-
+let g:vimwiki_table_mappings = 0
 
 " zeal
 " TODO investigate investigate.vim
@@ -35,12 +39,14 @@ nnoremap gz :!zeal "<cword>"&<CR><CR>
 
 
 " fzf and fzf.vim
-" TODO :Files ?
-" Fuzzy-search for a file in the current working directory
-"nnoremap <Leader>f :<C-u>Unite -start-insert file_rec/async:!<cr>
+" (Note that the macports fzf is automatically added to vim/macvim
+" path)
+
+" Open fuzzy-search, leave a space for faster typing of search path
+nnoremap <Leader>f :Files 
 
 " Fuzzy-search for current Git files
-nnoremap <Leader>f :GFiles<cr>
+nnoremap <Leader>g :GFiles<cr>
 " Fuzzy-search in v:oldfiles and all open buffers
 nnoremap <Leader>e :History<cr>
 " open buffer list
@@ -65,8 +71,6 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-inoremap <expr> <c-x><c-k> fzf#vim#complete('cat /usr/share/dict/words')
-
 " undotree
 nnoremap <leader>U :UndotreeToggle<CR>
 if has("persistent_undo")
@@ -81,21 +85,23 @@ let g:task_rc_override = 'rc.defaultwidth=0'
 let g:task_default_prompt = ['description', 'priority', 'tag']
 "let g:task_default_prompt = ['description', 'priority']
 
+" supertab
+" TODO it would be nice to have completion-chaining, but it seems like it
+" always ignores it when used with LanguageClient!
+let g:SuperTabSetDefaultCompletionType = "context"
 
 " LanguageClient-neovim
 let g:LanguageClient_serverCommands = {
   \ 'rust': ['~/.cargo/bin/rls'],
+  \ 'go': ['~/go/bin/gopls'],
   \ 'ruby': ['~/.gem/ruby/2.6/bin/solargraph26','stdio']
   \ }
 
-" unsure if required
-"set completefunc=LanguageClient#complete
-"set omnifunc=LanguageClient#complete
-
 " for using 'gq' formatting
-set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
+" set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 
-" Only enable LanguageClient shortcuts for certain filetypes
+" Only use LanguageClient for completion, not automatic linting
+let g:LanguageClient_diagnosticsEnable=0
 function SetLSPShortcuts()
   nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
   nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
@@ -107,17 +113,32 @@ function SetLSPShortcuts()
   nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
   nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
   nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+  " doesn't seem to work?
+  " for using 'gq' formatting
+  " setlocal formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 endfunction()
 
+" Only enable LanguageClient shortcuts and formatting for certain filetypes
 augroup LSP
   autocmd!
-  autocmd FileType rust,ruby call SetLSPShortcuts()
+  autocmd FileType rust,ruby,go call SetLSPShortcuts()
 augroup END
 
 
 " Shougo/echodoc.vim
 " Enables type-signature display for LanguageClient
 " (Note that cmdheight could be reduced if we want to give up 'showmode')
-set cmdheight=2
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#type = 'signature'
+" set cmdheight=2
+" let g:echodoc#enable_at_startup = 1
+" let g:echodoc#type = 'signature'
+
+
+" ultisnips
+let g:ulti_expand_or_jump_res = 0 "default value, just set once
+
+" remap ultisnips trigger to explicit C-j, to avoid conflicts with supertab or
+" LSP
+let g:UltiSnipsExpandTrigger = '<C-j>'
+let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+
