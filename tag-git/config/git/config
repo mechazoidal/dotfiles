@@ -21,3 +21,8 @@
 	pom = push origin master
 	ds = diff --stat=160,120
 	dh1 = diff HEAD~1
+# TODO don't know if I can re-use an alias defined in the same location
+	fff = !git fetch && git merge --ff-only
+# List ages of last commit on all remote and local branches
+	bar = !git branch -rvv --format='%(committerdate:iso8601), %(committerdate:relative) - %(refname:short)' | sort
+	bal = !git branch -vv --format='%(committerdate:iso8601), %(committerdate:relative) - %(refname:short)' | sort
