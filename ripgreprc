@@ -1,0 +1,6 @@
+# add the 'web' type from examples
+--type-add
+web:*.{html,css,js}*
+
+# always use the smart-case/-S option by default
+--smart-case
