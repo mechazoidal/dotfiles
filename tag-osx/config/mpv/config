@@ -1,4 +1,13 @@
-# from /opt/local/share/doc/mpv/examples/config-maintainer
+# for playing audio from youtube streams, etc.
+[video-music]
+cache=yes
+# Disable video entirely
+video=no
+# explicitly hint to ytdl to not get both audio and video tracks
+ytdl-format=bestaudio/best
+# limit network cache to 20MB
+demuxer-max-bytes=20M
+
 [default]
 
 hwdec=auto
