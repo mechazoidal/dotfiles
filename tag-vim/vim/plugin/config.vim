@@ -29,8 +29,23 @@ let g:vimwiki_use_calendar = 1
 "let g:vimwiki_url_maxsave = 20
 let g:vimwiki_url_maxsave = 0
 "let g:vimwiki_conceallevel = 2
-let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_tags': 1}]
+let diary_wiki = {}
+let diary_wiki.path = '~/personalwiki'
+let diary_wiki.auto_tags = 1
+let notes_wiki = {}
+let notes_wiki.path = '~/notewiki'
+let notes_wiki.auto_tags = 1
+" let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_tags': 1}]
+let g:vimwiki_list = [diary_wiki, notes_wiki]
 let g:vimwiki_table_mappings = 0
+" FIXME I don't think I need these(personalwiki should always be first and
+" opened), keeping for reference
+" Always open diary pages in the personalwiki, never notes
+" nmap <Leader>i <Plug>VimwikiDiaryIndex
+" nmap <Leader>d <Plug>VimwikiMakeDiaryNote
+" nmap <Leader>dt <Plug>VimwikiTabMakeDiaryNote
+" nmap <Leader>dy <Plug>VimwikiMakeYesterdayDiaryNote
+" nmap <Leader>dm <Plug>VimwikiMakeTomorrowDiaryNote
 
 " zeal
 " TODO investigate investigate.vim
