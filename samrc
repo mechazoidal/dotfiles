@@ -1,0 +1,76 @@
+# Taken from deadpixi sample config file
+
+# Control-A/E jumps to beginning/end of line
+bind C a command bol
+bind C e command eol
+
+# Control-H/L/J/K moves left/right/down/up
+bind C h command charleft
+bind C l command charright
+bind C j command linedown
+bind C k command lineup
+
+# Control-Space highlights recent text
+bind C space command escape
+
+# Escape jumps between command file and current file
+bind * Escape command jump
+
+# Control-U and Control-Shift-BackSpace deletes to beginning of line
+bind C u command delbol
+bind CS BackSpace command delbol
+
+# Control-W/BackSpace deletes previous word
+bind C w command delword
+bind C BackSpace command delword
+
+# Control-X/C/V/Q does cut/snarf/paste/exchange
+bind C x command cut
+bind C c command snarf
+bind C v command paste
+bind C q command exchange
+
+# Arrow keys and Page Up/Down work as expected
+bind * Up command lineup
+bind * Down command linedown
+bind * Left command charleft
+bind * Right command charright
+bind * Prior command scrollup
+bind * Next command scrolldown
+
+# All of the default movement key sequences were rebound as something else,
+# except for Control-D. Let's remove any special handling for that binding.
+unbind C d
+
+# Control-Z sends an undo command.
+bind C z command send u
+
+# Control-Return inserts a line below the current one
+bind C Return command send +-a/\n/
+
+# Control-S writes the file, Control-Shift-S writes all files.
+bind C s command write
+bind CS s command send X w
+
+# Control-N does a search, Control-Shift-N does a look
+bind C n command search
+bind CS n command look
+
+# I like 12pt Go Regular
+#font Go Regular:size=12
+font Inconsolata Medium:size=15
+# Inconsolata-g:h14
+# Inconsolata\ Medium\ 15
+
+# Use black for text and borders, and an angry fruit salad for backgrounds
+foreground black
+border black
+background white:seashell:lightgreen:oldlace:lightcyan:gainsboro:lightyellow:mintcream:snow:lightblue:thistle
+
+# Expand tabs and have tabstops every four columns
+tabs 4
+expandtabs true
+
+# Automatically indent lines
+autoindent true
+
