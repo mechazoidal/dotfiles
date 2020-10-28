@@ -1,0 +1,14 @@
+
+#shellcheck source=/home/mecha/.bash/exports
+#shellcheck source=/home/mecha/.bash/aliases
+. "$HOME/.bash/exports"
+. "$HOME/.bash/aliases"
+
+export FZF_DEFAULT_COMMAND='rg --files'
+
+# activate rupa/z
+#shellcheck source=/home/mecha/Desktop/src/z/z.sh
+. "$HOME/Desktop/src/z/z.sh"
+
+# Enable direnv: this line must ALWAYS come last
+eval "$(direnv hook bash)"
