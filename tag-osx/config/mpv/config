@@ -1,5 +1,5 @@
-# for playing audio from youtube streams, etc.
 [video-music]
+profile-desc="for playing audio from youtube streams, etc."
 cache=yes
 # Disable video entirely
 video=no

@@ -77,6 +77,7 @@ set synmaxcol=200
 
 " Show invisible characters(tab, EOL)
 set list
+set listchars=tab:▸\ ,eol:¬
 
 " Don't warn about files changing out from under us
 set autoread
@@ -106,7 +107,7 @@ end
 
 " change all smart quotes to their ascii equivs(", ')
 " (does not use /g since 'gdefault' is now always on)
-nnoremap <leader>Q :%s/\%u201c/"/<cr>:%s/\%u201d/"/<cr>:%s/\%u2019/'/<cr>:%s/\%u2018/'/<cr>:let @/=''<CR>
+nnoremap <leader>Q :%s/\%u201c/"/e<cr>:%s/\%u201d/"/e<cr>:%s/\%u2019/'/e<cr>:%s/\%u2018/'/e<cr>:let @/=''<CR>
 " strip all trailing whitespace in the current file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 " use jj to exit insert mode

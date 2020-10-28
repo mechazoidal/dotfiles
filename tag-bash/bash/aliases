@@ -18,9 +18,8 @@ alias tww='timew summary :week'
 alias twlw='timew summary :lastweek'
 alias twd='timew summary :day'
 
-# mpv / youtube-dl for playing audio
-# limit cache to 20MB
-alias mpvmv='mpv --video=no --cache=20000'
+# mpv + youtube-dl for playing audio from youtube
+alias mpvmv='mpv --profile=video-music'
 
 # TODO just print
 # serial
@@ -29,9 +28,11 @@ alias mpvmv='mpv --video=no --cache=20000'
 # subject
 # v3 extensions
 alias x509='openssl x509 -noout -text -in'
+alias ssh_rsakey='ssh-keygen -t rsa -b 4096'
+alias ssh_edkey='ssh-keygen -t ed25519'
 
 # k8s
 # needs kubectl, kubectx, kubens installed
-alias kcx='kubectx'
+alias kcx='kubectl ctx'
 alias kcl='kubectl'
-alias kcn='kubens'
+alias kcn='kubectl ns'
