@@ -58,7 +58,7 @@ bind CS n command look
 
 # I like 12pt Go Regular
 #font Go Regular:size=12
-font Inconsolata Medium:size=15
+font Inconsolata Medium:size=11
 # Inconsolata-g:h14
 # Inconsolata\ Medium\ 15
 
