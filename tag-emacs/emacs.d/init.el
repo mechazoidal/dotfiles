@@ -57,22 +57,25 @@
 
 (require 'package)
 (setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
-;; the following lines tell emacs where on the internet to look up
-;; for new packages.
-(setq package-archives '(("org"       . "http://orgmode.org/elpa/")
-                         ("gnu"       . "http://elpa.gnu.org/packages/")
-                         ("melpa"     . "https://melpa.org/packages/")
-			                   ("melpa-stable"     . "https://stable.melpa.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")))
-(package-initialize) ; guess what this one does ?
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize) 
 
 ;; Bootstrap `use-package'
+; from melpa
 (unless (package-installed-p 'use-package) ; unless it is already installed
   (package-refresh-contents) ; updage packages archive
   (package-install 'use-package)) ; and install the most recent version of use-package
 
-(eval-when-compile ; not required at runtime
-  (require 'use-package)) ; guess what this one does too ?
+;; This is only needed once, near the top of the file
+(eval-when-compile
+  ;; Following line is not needed if use-package.el is in ~/.emacs.d
+  (add-to-list 'load-path "<path where use-package is installed>")
+  (require 'use-package))
+
+; (eval-when-compile ; not required at runtime
+;   (require 'use-package)) ; guess what this one does too ?
 ;; (use-package general :ensure t
 ;;   :config
 ;;   (general-define-key
@@ -97,8 +100,10 @@
 (use-package counsel :ensure t)
 (use-package swiper :ensure t)
 
-(use-package projectile :ensure t)
-(use-package counsel-projectile :ensure t)
+; TODO see if baseline project.el suffices (along with counsel plugin for project.el)
+; https://www.gnu.org/software/emacs/manual/html_node/emacs/Projects.html#Projects
+; (use-package projectile :ensure t)
+; (use-package counsel-projectile :ensure t)
 
 (use-package which-key :ensure t :config (which-key-mode))
 (use-package general :ensure t)
@@ -127,10 +132,10 @@
  "ff" '(counsel-find-file :which-key "find file")
  "fr" '(counsel-recentf :which-key "recent file")
  "p" '(:ignore t :which-key "project")
- "pf" '(counsel-projectile-find-file :which-key "find file in project")
- "pa" '(counsel-projectile-ag :which-key "find file in project with Ag")
- "pb" '(counsel-projectile-switch-to-buffer :which-key "switch to project buffer")
- "pp" '(counsel-projectile-switch-project :which-key "switch to project")
+ ; "pf" '(counsel-projectile-find-file :which-key "find file in project")
+ ; "pa" '(counsel-projectile-ag :which-key "find file in project with Ag")
+ ; "pb" '(counsel-projectile-switch-to-buffer :which-key "switch to project buffer")
+ ; "pp" '(counsel-projectile-switch-project :which-key "switch to project")
 ; "pf" '(counsel-git :which-key "find file in git dir")
 ; "pa" '(counsel-ag :which-key "find using Ag")
  ;; org-mode
