@@ -26,3 +26,8 @@
 # List ages of last commit on all remote and local branches
 	bar = !git branch -rvv --format='%(committerdate:iso8601), %(committerdate:relative) - %(refname:short)' | sort
 	bal = !git branch -vv --format='%(committerdate:iso8601), %(committerdate:relative) - %(refname:short)' | sort
+[user]
+	email = scott@kurokoproject.com
+	name = Scott Francis
+[merge]
+	guitool = p4merge
