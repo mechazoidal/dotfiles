@@ -5,6 +5,53 @@ if filereadable($VIMRUNTIME . '/defaults.vim')
   source $VIMRUNTIME/defaults.vim
 endif
 
+" The core fzf plugin needs to be enabled BEFORE the fzf.vim package is loaded
+" (the conditional is just a kludge to test if we're on osx or a unix)
+if isdirectory('/opt')
+  set rtp+=/opt/local/share/fzf/vim/
+else
+  set rtp+=/usr/local/share/fzf/vim
+endif
+" PLUGINS: LOAD
+" (vim-plug standard path: ~/.vim/autoload/plug.vim)
+call plug#begin('~/.vim/plugged')
+Plug 'airblade/vim-rooter'
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
+Plug 'junegunn/fzf.vim'
+Plug 'mbbill/undotree'
+Plug 'mhinz/vim-grepper'
+Plug 'reedes/vim-lexical'
+Plug 'reedes/vim-wordy'
+Plug 'tpope/tpope-vim-abolish'
+Plug 'tpope/vim-apathy'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-jdaddy'
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-sleuth' 
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-vinegar'
+Plug 'vim-scripts/scratch.vim'
+Plug 'vimwiki/vimwiki'
+Plug 'dense-analysis/ale'
+let g:ultisnips_install = 'mkdir -p ~/.vim/ftdetect/ && ln -s ./ftdetect/* ~/.vim/ftdetect/'
+Plug 'honza/vim-snippets' | Plug 'SirVer/ultisnips', { 'do': g:ultisnips_install }
+Plug 'AndrewRadev/bufferize.vim'
+" Plug 'lifepillar/vim-mucomplete'
+" Plug 'shumphrey/fugitive-gitlab.vim'
+Plug 'hashivim/vim-terraform'
+Plug 'markonm/traces.vim'
+Plug 'mattn/emmet-vim'
+call plug#end()
+
 " syntax highlighting, keep existing color settings
 syntax enable 
 
@@ -27,11 +74,6 @@ set visualbell
 set ttyfast
 set backspace=indent,eol,start
 set laststatus=2
-" set relativenumber " requires Vim 7.3!
-" set number " requires Vim 7.4!
-
-" FIXME what about openbsd
-"set shell=bash
 
 " Disable cursor blinking
 set gcr=a:blinkon0
@@ -60,11 +102,10 @@ set wrap
 " requires Vim 8+
 set breakindent " indent wrapped lines, by...
 set breakindentopt=shift:4,sbr " indenting them another level and showing 'showbreak' char
-" see .gvimrc for showbreak and listchars
-"set showbreak=↪
+set listchars=tab:▸\ ,eol:¬
+set showbreak=↪
 " with breakindent+relativenumber, display line movements unless preceded by a count
 " (and save movements larger than 5 lines to the jumplist)
-" TODO not sure if these are useful, and if they're causing slowdown
 nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
 nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
@@ -105,9 +146,25 @@ if has('macunix')
   imap <MiddleMouse> <Nop>
 end
 
-" change all smart quotes to their ascii equivs(", ')
+" TRIAL
+" change all fancy characters to their ascii equivs(", ', etc.)
+" from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc#L615
+function! RemoveFancyCharacters()
+    let typo = {}
+    let typo["“"] = '"'
+    let typo["”"] = '"'
+    let typo["‘"] = "'"
+    let typo["’"] = "'"
+    let typo["–"] = '--'
+    let typo["—"] = '---'
+    let typo["…"] = '...'
+    :exe ":%s/".join(keys(typo), '\|').'/\=typo[submatch(0)]/ge'
+endfunction
+command! RemoveFancyCharacters :call RemoveFancyCharacters()
 " (does not use /g since 'gdefault' is now always on)
-nnoremap <leader>Q :%s/\%u201c/"/e<cr>:%s/\%u201d/"/e<cr>:%s/\%u2019/'/e<cr>:%s/\%u2018/'/e<cr>:let @/=''<CR>
+" nnoremap <leader>Q :%s/\%u201c/"/e<cr>:%s/\%u201d/"/e<cr>:%s/\%u2019/'/e<cr>:%s/\%u2018/'/e<cr>:let @/=''<CR>
+nnoremap <leader>Q RemoveFancyCharacters
+
 " strip all trailing whitespace in the current file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 " use jj to exit insert mode
@@ -117,6 +174,7 @@ inoremap jj <ESC>
 nnoremap <leader>w <C-w>v<C-w>l
 " Split horizontally with <leader>v
 nnoremap <leader>v <C-w>s<C-w>k
+" jump between splits with regular motions
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -168,21 +226,30 @@ autocmd vimrc VimResized * wincmd =
 " from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
 " THis is a slightly smarter tab-complete. It moves backwards in the menu to
 " avoid trickery with sending C-N after a Tab
+" COLLIDES with mucomplete
 function! InsertTabWrapper()
     let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<Tab>"
+    if !col
+        return "\<tab>"
+    endif
+
+    let char = getline('.')[col - 1]
+    if char =~ '\k'
+        " There's an identifier before the cursor, so complete the identifier.
+        return "\<c-p>"
     else
-        return "\<C-P>"
+        return "\<tab>"
     endif
 endfunction
-inoremap <expr> <Tab> InsertTabWrapper()
-inoremap <S-Tab> <C-N>
+inoremap <expr> <tab> InsertTabWrapper()
+inoremap <s-tab> <c-n>
 
 
 " FIXME because these are called from vimrc, they don't seem to work if moved
 " to an autoload script
 " http://vim.wikia.com/wiki/Toggle_to_open_or_close_the_quickfix_window
+" TODO investigate cleaned-up functions at:
+" https://github.com/garybernhardt/dotfiles/blob/master/.vimrc#L581
 function! GetBufferList() abort
   redir =>buflist
   silent! ls!
@@ -198,6 +265,8 @@ function! ToggleList(bufname, pfx) abort
       return
     endif
   endfor
+  " FIXME this only stops the list from opening if it's the loclist, not
+  " quickfix
   if a:pfx == 'l' && len(getloclist(0)) == 0
       echohl ErrorMsg
       echo "Location list is empty"
@@ -213,15 +282,6 @@ endfunction
 nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
 nmap <silent> <leader>q :call ToggleList("Quickfix List", 'c')<CR>
 
-packadd! vim-lexical
-" Can't define these in after/ftplugin as they are plugin-specific
-augroup lexical
-  autocmd!
-  autocmd FileType markdown,mkd call lexical#init()
-  autocmd FileType textile call lexical#init()
-  autocmd FileType text call lexical#init({ 'spell': 0 })
-  autocmd FileType vimwiki call lexical#init({ 'spell': 0 })
-augroup END
 
 
 " TODO move+load developer.vim to/from plugin/
@@ -243,18 +303,17 @@ packadd! matchit
 " Make Y apply from cursor to end of line
 nnoremap Y y$
 
-" The core fzf plugin needs to be enabled BEFORE the fzf.vim package is loaded
-" (the conditional is just a kludge to test if we're on osx or a unix)
-if isdirectory('/opt')
-  set rtp+=/opt/local/share/fzf/vim/
-else
-  set rtp+=/usr/local/share/fzf/vim
-endif
 
-
-"nnoremap <leader>iw :put =strftime('%U')<cr>
-"nnoremap <leader>id :put =strftime('%A')<cr>
 nnoremap <leader>id :put =strftime('%Y%m%d')<cr>
 
+" TRIAL easier specific completion without tab
+" inoremap ^] ^X^]
+inoremap <c-]> <c-x><c-]>
+" inoremap ^F ^X^F
+inoremap <c-f> <c-x><c-f>
+" inoremap ^D ^X^D
+inoremap <c-d> <c-x><c-d>
+" inoremap ^L ^X^L
+inoremap <c-l> <c-x><c-l>
 " All other extra configs (and plugins) are in ~/.vim/plugin/config.vim
 
