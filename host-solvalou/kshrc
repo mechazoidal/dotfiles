@@ -9,11 +9,6 @@ PS1="[\u@\h:\W]\$ "
 #test -t 0 && set -o emacs
 #export PATH=$HOME/bin:$HOME/workspace/inferno-os/OpenBSD/386/bin:$HOME/.gem/ruby/2.3/bin:$PATH
 
-# TODO this was just to fix some bad-behaving builds, do I still need it?
-AUTOCONF_VERSION=2.69
-
-export AUTOCONF_VERSION
-
 # load completions
 . "$HOME/.ksh_completions"
 
@@ -22,3 +17,17 @@ HISTFILE="$HOME/.ksh_history"
 # Note that openbsd ksh doesn't seem to have a pattern-ignore(like bash), and doesn't like multiples in this setting
 HISTCONTROL=ignoredups
 
+# Additions
+export FZF_DEFAULT_COMMAND='rg --files'
+# zoxide/z
+
+# Rust setup
+export RUST_BIN=$HOME/.cargo/bin
+export PATH=$PATH:/$RUST_BIN
+
+# z / zoxide setup
+eval "$(zoxide init bash)"
+
+# Ruby
+# This ensures that gem executables(like bundler) get picked up
+export PATH=$PATH:$GEM_HOME/bin
