@@ -2,6 +2,144 @@
   "title": "mechazoidal personal",
   "rules": [
     {
+      "description": "Hyper-x: focus Firefox",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "x",
+            "modifiers": {
+              "mandatory": [
+                "left_shift",
+                "left_command",
+                "left_control",
+                "left_option"
+              ]
+            }
+          },
+          "to": [{"shell_command": "open -a 'Firefox.app'"}],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Hyper-z: focus Zoom",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "z",
+            "modifiers": {
+              "mandatory": [
+                "left_shift",
+                "left_command",
+                "left_control",
+                "left_option"
+              ]
+            }
+          },
+          "to": [{"shell_command": "open -a 'zoom.us.app'"}],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Hyper-v: focus MacVim",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "v",
+            "modifiers": {
+              "mandatory": [
+                "left_shift",
+                "left_command",
+                "left_control",
+                "left_option"
+              ]
+            }
+          },
+          "to": [{"shell_command": "open -a 'MacVim.app'"}],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Hyper-c: focus Chrome",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "c",
+            "modifiers": {
+              "mandatory": [
+                "left_shift",
+                "left_command",
+                "left_control",
+                "left_option"
+              ]
+            }
+          },
+          "to": [{"shell_command": "open -a 'Google Chrome.app'"}],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Hyper-t: focus iTerm",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "t",
+            "modifiers": {
+              "mandatory": [
+                "left_shift",
+                "left_command",
+                "left_control",
+                "left_option"
+              ]
+            }
+          },
+          "to": [{"shell_command": "open -a 'iTerm.app'"}],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Hyper-k: focus KeepassXC",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "k",
+            "modifiers": {
+              "mandatory": [
+                "left_shift",
+                "left_command",
+                "left_control",
+                "left_option"
+              ]
+            }
+          },
+          "to": [{"shell_command": "open -a 'KeepassXC.app'"}],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Right Menu to Hyper key(shift+cmd+ctrl+opt)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "application",
+            "modifiers": {"optional": ["any"]}
+          },
+          "to": [
+            {
+              "key_code": "left_shift",
+              "modifiers": ["left_command", "left_control", "left_option"]
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    },
+    {
       "description": "Left Control to Hyper key(shift+cmd+ctrl+opt)",
       "manipulators": [
         {
