@@ -110,6 +110,7 @@ let
       
       " Show invisible characters(tab, EOL)
       set list
+      set listchars=tab:▸\ ,eol:¬
       
       " Don't warn about files changing out from under us
       set autoread

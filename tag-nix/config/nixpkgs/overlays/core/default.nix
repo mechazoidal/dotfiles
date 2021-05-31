@@ -2,24 +2,29 @@
 self: super:
 
 {
-  core = with super.pkgs; super.buildEnv {
+  mecha-core = with super.pkgs; super.buildEnv {
     name = "mecha-core";
     paths =  [
-      ark
+      age
+      # ark # kde qt5 breezedecoration
+      bat
       bc
-      curl
+      # chezmoi # use unstable.chezmoi instead until 2.0+ is in stable
       direnv
-      dtrx
+      doxygen
+      fd
       ffmpeg
-      ffmpegthumbs
+      # ffmpegthumbs # kde qt5 breezedecoration
       fzf
-      ghostscript
+      graphviz
       git
-      gnupg
       jq
-      keepassxc
+      niv
+      nmap
+      mercurial
       mpv
       mumble
+      #nixos.openssl
       openssl
       parallel
       rcm
@@ -27,14 +32,15 @@ self: super:
       screen
       shellcheck
       silver-searcher
+      signify
       socat
       sox
-      tig
       timewarrior
-      tree
-      wget
+      vim
       wordnet
+      youtube-dl
       zip
+      # zoxide # use unstable.zoxide instead
     ];
   };
 }
