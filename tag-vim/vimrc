@@ -7,11 +7,12 @@ endif
 
 " The core fzf plugin needs to be enabled BEFORE the fzf.vim package is loaded
 " (the conditional is just a kludge to test if we're on osx or a unix)
-if isdirectory('/opt')
-  set rtp+=/opt/local/share/fzf/vim/
-else
-  set rtp+=/usr/local/share/fzf/vim
-endif
+" TODO this can be replaced by a second invocation of Plug for fzf
+" if isdirectory('/opt')
+"   set rtp+=/opt/local/share/fzf/vim/
+" else
+"   set rtp+=/usr/local/share/fzf/vim
+" endif
 " PLUGINS: LOAD
 " (vim-plug standard path: ~/.vim/autoload/plug.vim)
 call plug#begin('~/.vim/plugged')
@@ -20,7 +21,10 @@ Plug 'airblade/vim-rooter'
 "     \ 'branch': 'next',
 "     \ 'do': 'bash install.sh',
 "     \ }
-Plug 'junegunn/fzf.vim'
+" FIXME nixos 20.09 only: must lock fzf and fzf.vim to 0.22 since nix doesn't ship the
+" newer version yet
+Plug 'junegunn/fzf', { 'tag': '0.22.0' }
+Plug 'junegunn/fzf.vim', { 'commit': '18205e071dc701ed9ca51971466b9997cd3d0778' }
 Plug 'mbbill/undotree'
 Plug 'mhinz/vim-grepper'
 Plug 'reedes/vim-lexical'
@@ -43,13 +47,14 @@ Plug 'vim-scripts/scratch.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'dense-analysis/ale'
 let g:ultisnips_install = 'mkdir -p ~/.vim/ftdetect/ && ln -s ./ftdetect/* ~/.vim/ftdetect/'
-Plug 'honza/vim-snippets' | Plug 'SirVer/ultisnips', { 'do': g:ultisnips_install }
+" Plug 'honza/vim-snippets' | Plug 'SirVer/ultisnips', { 'do': g:ultisnips_install }
 Plug 'AndrewRadev/bufferize.vim'
 " Plug 'lifepillar/vim-mucomplete'
 " Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'hashivim/vim-terraform'
 Plug 'markonm/traces.vim'
 Plug 'mattn/emmet-vim'
+" Plug 'honza/vim-snippets' | Plug 'SirVer/ultisnips'
 call plug#end()
 
 " syntax highlighting, keep existing color settings
@@ -160,10 +165,9 @@ function! RemoveFancyCharacters()
     let typo["…"] = '...'
     :exe ":%s/".join(keys(typo), '\|').'/\=typo[submatch(0)]/ge'
 endfunction
-command! RemoveFancyCharacters :call RemoveFancyCharacters()
 " (does not use /g since 'gdefault' is now always on)
 " nnoremap <leader>Q :%s/\%u201c/"/e<cr>:%s/\%u201d/"/e<cr>:%s/\%u2019/'/e<cr>:%s/\%u2018/'/e<cr>:let @/=''<CR>
-nnoremap <leader>Q RemoveFancyCharacters
+nnoremap <leader>Q :call RemoveFancyCharacters()<cr>
 
 " strip all trailing whitespace in the current file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>

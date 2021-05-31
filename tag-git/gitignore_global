@@ -141,3 +141,5 @@ tags
 
 # End of https://www.gitignore.io/api/git,vim,osx,cmake,emacs,mercurial
 
+# nix-specific
+.envrc
