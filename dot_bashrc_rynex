@@ -1,0 +1,4 @@
+# thanks to nixos, only CORE settings need to go here
+# (languages and other configs can be stored separately)
+
+eval "$(zoxide init bash)"

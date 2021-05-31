@@ -1,0 +1,256 @@
+# adapted from:
+# https://github.com/qbit/dotfiles/blob/master/common/dot_ksh_completions
+read_known_hosts() {
+        local _file=$1 _line _host
+
+        while read _line ; do
+          _line=${_line%%#*} # delete comments
+          _line=${_line%%@*} # ignore markers
+          _line=${_line%% *} # keep only host field
+
+          [[ -z $_line ]] && continue
+
+          local IFS=,
+          for _host in $_line; do
+            _host=${_host#\[}
+            _host=${_host%%\]*}
+            for i in ${HOST_LIST[*]}; do
+              [[ $_host == $i ]] && continue 2
+            done
+            set -s -A HOST_LIST ${HOST_LIST[*]} $_host
+          done
+        done <$_file
+}
+
+[[ -s /etc/ssh/ssh_known_hosts ]] && read_known_hosts /etc/ssh/ssh_known_hosts
+[[ -s ~/.ssh/known_hosts ]] && read_known_hosts ~/.ssh/known_hosts
+
+set -A complete_ssh -- ${HOST_LIST[*]}
+set -A complete_scp -- ${HOST_LIST[*]}
+set -A complete_mosh -- ${HOST_LIST[*]}
+
+# Package Managers
+# OpenBSD pkg_*
+if [ -d /var/db/pkg ]; then
+	PKG_LIST=$(ls -1 /var/db/pkg)
+	set -A complete_pkg_delete -- $PKG_LIST
+	set -A complete_pkg_info -- $PKG_LIST
+
+	set -A complete_pkg_1 -- add check create delete info
+	set -A complete_pkg_2 -- $PKG_LIST
+fi
+
+# Utilities
+if [ ! -f /tmp/man_list ]; then
+	MANPATH=/usr/share/man man -k Nm~. | cut -d\( -f1 | tr -d , | \
+		sort | \
+		uniq > /tmp/man_list
+fi
+set -A complete_man_1 -- $(cat /tmp/man_list)
+
+set -A complete_kill_1 -- -9 -HUP -INFO -KILL -TERM
+
+set -A complete_ifconfig_1 -- $(ifconfig | grep ^[a-z] | cut -d: -f1)
+
+set -A complete_signify_1 -- -C -G -S -V
+set -A complete_signify_2 -- -q -p -x -c -m -t -z
+set -A complete_signify_3 -- -p -x -c -m -t -z
+
+pgrep -fq '/usr/sbin/vmd'
+if [ $? = 0 ]; then
+	set -A complete_vmctl -- console load reload start stop reset status send receive
+	set -A complete_vmctl_2 -- $(vmctl status | awk '!/NAME/{print $NF}')
+fi
+
+pgrep -fq '/usr/local/sbin/mpd'
+if [ $? = 0 ]; then
+	set -A complete_mpc_1 -- \
+		add \
+		cdprev channels clear clearerror \
+		consume crop crossfade current \
+		del disable \
+		enable \
+		find findadd \
+		idle idleloop insert \
+		list listall load ls lsplaylists \
+		mixrampdb mixrampdelay move \
+		next \
+		outputs outputset \
+		pause pause-if-playing play playlist prev prio \
+		random repeat replaygain rescan rm \
+		save search searchadd searchplay seek \
+		sendmessage shuffle single stats \
+		sticker stop subscribe \
+		toggle toggleoutput \
+		update \
+		version volume \
+		waitmessage \
+	set -A complete_mpc_2 -- $(mpc lsplaylists | sort)
+fi
+
+if [ -e /usr/local/bin/rclone ]; then
+	if [ -f ~/.config/rclone/rclone.conf ]; then
+		RCLONE_LIST=$(rclone listremotes)
+		set -A complete_rclone_1 -- \
+			about authorize \
+			cachestats cat check cleanup config copy copyto \
+			copyurl cryptcheck \ cryptdecode \
+			dbhashsum dedupe delete deletefile \
+			genautocomplete gendocs \
+			hashsum help \
+			link listremotes ls lsd lsf lsjson lsl \
+			md5sum mkdir move moveto \
+			ncdu \
+			obscure \
+			purge \
+			rc rcat rcd rmdir rmdirs \
+			serve settier sha1sum size sync \
+			touch tree \
+			version
+		set -A complete_rclone -- $RCLONE_LIST
+	fi
+fi
+
+if [ -x /usr/rbin/rcctl ]; then
+	set -A complete_rcctl_1 -- disable enable get ls order set restart start stop
+	set -A complete_rcctl_2 -- $(rcctl ls all)
+fi
+
+set -A complete_make_1 -- \
+	clean \
+	install \
+
+set -A complete_rcctl_1 -- disable enable get ls order set restart start stop
+set -A complete_rcctl_2 -- $(rcctl ls all)
+
+set -A complete_signify_1 -- -C -G -S -V
+set -A complete_signify_2 -- -q -p -x -c -m -t -z
+set -A complete_signify_3 -- -p -x -c -m -t -z
+
+set -A complete_make_1 -- install clean repackage reinstall
+
+set -A complete_beet_1 -- \
+	as \
+	clearart config \
+	duplicates \
+	embedart extractart \
+	fetchart fields fingerprint \
+	help \
+	import \
+	lastgenre list lyrics \
+	mbsync missing modify move mpdstats \
+	remove \
+	scrub splupdate stats submit \
+	update \
+	version \
+	web write
+
+set -A complete_gpg2 -- \
+		--armor \
+		--clearsign \
+		--decrypt \
+		--detach-sig \
+		--list-key \
+		--receive-keys \
+		--refresh \
+		--sign \
+		--verify
+
+# TODO allow mixerctl complete IF `mixerctl` returns 0(ie, root/doas)
+#
+# sndioctl replaces (user-level) mixerctl in openbsd 6.7+
+if [ -e /usr/bin/sndioctl ]; then
+	set -A complete_sndioctl_1 -- $(sndioctl | cut -d= -f 1)
+fi
+
+if [ -e /usr/local/bin/opm ]; then
+	if [ -d ~/.opm ]; then
+		set -A complete_opm_1 -- -b -c -d -h -m \
+			add \
+			del \
+			encrypt \
+			get \
+			insert \
+			list ls \
+			rm \
+			search show \
+			verify
+		set -A complete_opm -- $(/usr/local/bin/opm -b ls)
+	fi
+fi
+
+if [ -e /usr/local/bin/gopass ]; then
+	PASS_LIST=$(gopass ls -f)
+	set -A complete_gopass -- $PASS_LIST \
+		audit \
+		bin binary \
+		clone completion config copy cp create \
+		delete \
+		edit \
+		find fix fsck \
+		generate git grep \
+		h help hotp \
+		init insert \
+		jsonapi \
+		list ls \
+		mounts move mv \
+		new \
+		otp \
+		recipients remove rm \
+		search set setup show sync \
+		templates totp \
+		unclip update \
+		version
+	set -A complete_pass -- $PASS_LIST \
+		audit \
+		bin binary \
+		clone completion config copy cp create \
+		delete \
+		edit \
+		find fix fsck \
+		generate git grep \
+		h help hotp \
+		init insert \
+		jsonapi \
+		list ls \
+		mounts move mv \
+		new \
+		otp \
+		recipients remove rm \
+		search set setup show sync \
+		templates totp \
+		unclip update \
+		version
+fi
+# / Utilities
+
+# SCM
+set -A complete_git_1 -- \
+	checkout cherry-pick clean clone commit config \
+	mpull mpush \
+	pull push \
+	status
+
+set -A complete_hg_1 -- \
+	add annotate \
+	clone commit \
+	diff \
+	export \
+	forget \
+	help \
+	init \
+	log \
+	merge \
+	pull push \
+	remove \
+	serve status summary \
+	update
+# / SCM
+
+function reload_completions {
+	if [ -e ~/.ksh_completions ]; then
+		. ~/.ksh_completions
+		echo "ksh completions reloaded"
+	fi
+}
+

@@ -1,9 +1,0 @@
----
-Metrics/LineLength:
-  Enabled: false
-Layout/SpaceAroundOperators:
-  Enabled: false
-Style/CommentAnnotation:
-  Enabled: false
-Style/FrozenStringLiteralComment:
-  Enabled: false

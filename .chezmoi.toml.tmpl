@@ -1,0 +1,15 @@
+{{- $name := get . "name" -}}
+{{- if not $name -}}
+{{-   $name = promptString "name" -}}
+{{- end -}}
+
+{{- $email := get . "email" -}}
+{{- if not $email -}}
+{{-   $email = promptString "email" -}}
+{{- end -}}
+[data]
+  name = {{ $name | quote }}
+  email = {{ $email | quote }}
+  mpv_volume = 45
+[keepassxc]
+  database = "/home/mecha/.keepass/accounts.kdbx"

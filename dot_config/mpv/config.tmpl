@@ -1,0 +1,35 @@
+[video-music]
+profile-desc="for playing audio from youtube streams, etc."
+cache=yes
+# Disable video entirely
+video=no
+# explicitly hint to ytdl to not get both audio and video tracks
+ytdl-format=bestaudio/best
+# limit network cache to 20MB
+demuxer-max-bytes=20M
+
+[default]
+{{ if eq .chezmoi.os "darwin" -}}
+
+hwdec=auto
+# swf: Keep starting volume sane
+volume=40
+
+# if you need to use CPU filters or others, this setting allows HW playback IF it copies the frame back to system memory
+#hwdec=auto-copy
+
+
+{{ else if eq .chezmoi.os "linux" -}}
+# TODO find where the config-maintainer file is for nix, crib from that
+
+
+profile=gpu-hq # use high-quality OpenGL options
+{{ end -}}
+
+# Keep starting volume sane
+volume={{ .mpv_volume }}
+
+ytdl
+ytdl-format=best
+# Always choose english subtitles
+slang=en

@@ -1,0 +1,16 @@
+{{ if ne .chezmoi.os "openbsd" }}
+.Xdefaults
+.kshrc
+.ksh_completions
+.xsession
+{{ end }}
+
+{{ if ne .chezmoi.hostname "Judge-Spear" }}
+.bashrc_Judge-Spear
+.config/karabiner
+{{ end }}
+{{ if ne .chezmoi.hostname "rynex" }}
+.bashrc_rynex
+.bash/aliases_rynex
+.config/nixpkgs
+{{ end }}
