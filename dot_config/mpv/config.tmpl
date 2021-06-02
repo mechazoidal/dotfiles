@@ -10,14 +10,10 @@ demuxer-max-bytes=20M
 
 [default]
 {{ if eq .chezmoi.os "darwin" -}}
-
 hwdec=auto
-# swf: Keep starting volume sane
-volume=40
 
 # if you need to use CPU filters or others, this setting allows HW playback IF it copies the frame back to system memory
 #hwdec=auto-copy
-
 
 {{ else if eq .chezmoi.os "linux" -}}
 # TODO find where the config-maintainer file is for nix, crib from that

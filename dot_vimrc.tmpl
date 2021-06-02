@@ -5,16 +5,13 @@ if filereadable($VIMRUNTIME . '/defaults.vim')
   source $VIMRUNTIME/defaults.vim
 endif
 
-{{- if ne .chezmoi.osRelease.id "nixos" }}
 " The core fzf plugin needs to be enabled BEFORE the fzf.vim package is loaded
-" (the conditional is just a kludge to test if we're on osx or a unix)
-if isdirectory('/opt')
-  set rtp+=/opt/local/share/fzf/vim/
-else
-  " set rtp+=/usr/local/share/fzf/vim
-  set rtp+=/usr/local/share/vim/vimfiles
-endif
+{{- if (eq .chezmoi.os "darwin") }}
+set rtp+=/opt/local/share/fzf/vim/
+{{- else }}
+set rtp+=/usr/local/share/vim/vimfiles
 {{- end }}
+
 " PLUGINS: LOAD
 " (vim-plug standard path: ~/.vim/autoload/plug.vim)
 call plug#begin('~/.vim/plugged')
@@ -24,14 +21,14 @@ Plug 'airblade/vim-rooter'
 "     \ 'branch': 'next',
 "     \ 'do': 'bash install.sh',
 "     \ }
-{{- if eq .chezmoi.osRelease.id "nixos" }}
+{{- if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "nixos")) }}
 " FIXME nixos 20.09 only: must lock fzf and fzf.vim to 0.22 since nix doesn't ship the
 " newer version yet
 Plug 'junegunn/fzf', { 'tag': '0.22.0' }
 Plug 'junegunn/fzf.vim', { 'commit': '18205e071dc701ed9ca51971466b9997cd3d0778' }
-{{- else }}
+{{ else }}
 Plug 'junegunn/fzf.vim'
-{{- end }}
+{{ end -}}
 Plug 'mbbill/undotree'
 Plug 'mhinz/vim-grepper'
 Plug 'reedes/vim-lexical'
@@ -53,17 +50,12 @@ Plug 'tpope/vim-vinegar'
 Plug 'vim-scripts/scratch.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'dense-analysis/ale'
-" Plug 'honza/vim-snippets'
-" Plug 'SirVer/ultisnips'
 Plug 'AndrewRadev/bufferize.vim'
-" Plug 'lifepillar/vim-mucomplete'
-{{- if eq .chezmoi.hostname "C02TBGUGTFM" }}
-"Plug 'arp242/gopher.vim'
-Plug 'shumphrey/fugitive-gitlab.vim'
-Plug 'hashivim/vim-terraform'
-{{- end }}
 Plug 'markonm/traces.vim'
 Plug 'mattn/emmet-vim'
+{{ if (stat (list "dot_vim/plugins" .chezmoi.hostname | join "_")) }}
+{{ include (list "dot_vim/plugins" .chezmoi.hostname | join "_") }}
+{{ end }}
 call plug#end()
 
 " syntax highlighting, keep existing color settings
@@ -116,12 +108,10 @@ set wrap
 " requires Vim 8+
 set breakindent " indent wrapped lines, by...
 set breakindentopt=shift:4,sbr " indenting them another level and showing 'showbreak' char
-" see .gvimrc for showbreak and listchars
 set listchars=tab:▸\ ,eol:¬
 set showbreak=↪
 " with breakindent+relativenumber, display line movements unless preceded by a count
 " (and save movements larger than 5 lines to the jumplist)
-" TODO not sure if these are useful, and if they're causing slowdown
 nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
 nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
@@ -172,7 +162,7 @@ function! RemoveFancyCharacters()
     let typo["–"] = '--'
     let typo["—"] = '---'
     let typo["…"] = '...'
-    :exe ":%s/".join(keys(typo), '\|').'/\=typo[submatch(0)]/ge'
+    :exe ":%s/".join(keys(typo), '\|').'/\=typo[submatch(0)]/e'
 endfunction
 nnoremap <leader>Q :call RemoveFancyCharacters()<cr>
 
@@ -313,9 +303,17 @@ packadd! matchit
 nnoremap Y y$
 
 
-"nnoremap <leader>iw :put =strftime('%U')<cr>
-"nnoremap <leader>id :put =strftime('%A')<cr>
 nnoremap <leader>id :put =strftime('%Y%m%d')<cr>
+
+" TRIAL easier specific completion without tab
+" inoremap ^] ^X^]
+inoremap <c-]> <c-x><c-]>
+" inoremap ^F ^X^F
+inoremap <c-f> <c-x><c-f>
+" inoremap ^D ^X^D
+inoremap <c-d> <c-x><c-d>
+" inoremap ^L ^X^L
+inoremap <c-l> <c-x><c-l>
 
 " All other extra configs (and plugins) are in ~/.vim/plugin/config.vim
 

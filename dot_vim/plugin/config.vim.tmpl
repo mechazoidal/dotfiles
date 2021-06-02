@@ -5,16 +5,16 @@ nnoremap <leader>G :Git
 
 
 " vim-rooter
-" (cd is default mapping, dup'd here for explicitness)
-"map <silent> <unique> <Leader>cd <Plug>RooterChangeToRootDirectory
-" let g:rooter_use_lcd = 1
 let g:rooter_cd_cmd="lcd"
 let g:rooter_silent_chdir = 1
+let g:rooter_change_directory_for_non_project_files = 'current'
 
 
 " vim-grepper
 runtime plugin/grepper.vim
 let g:grepper.rg.grepprg .= ' --smart-case'
+let g:grepper.operator.prompt = 1
+let g:grepper.operator.tool = 'rg'
 " mappings
 nnoremap <leader>a :Grepper -tool ag<cr>
 nnoremap <leader>r :Grepper -tool rg<cr>
@@ -22,13 +22,12 @@ nnoremap <leader>r :Grepper -tool rg<cr>
 " (eg. 'gsiw' to search for the word under cursor)
 nmap gs  <plug>(GrepperOperator)
 xmap gs  <plug>(GrepperOperator)
+let g:grepper.dir = 'repo,filecwd'
 
 
 " vimwiki
 let g:vimwiki_use_calendar = 1
-"let g:vimwiki_url_maxsave = 20
 let g:vimwiki_url_maxsave = 0
-"let g:vimwiki_conceallevel = 2
 let diary_wiki = {}
 let diary_wiki.path = '~/personalwiki'
 let diary_wiki.auto_tags = 1
@@ -38,14 +37,6 @@ let notes_wiki.path = '~/notewiki'
 let notes_wiki.auto_tags = 1
 let g:vimwiki_list = [diary_wiki, notes_wiki]
 let g:vimwiki_table_mappings = 0
-" FIXME I don't think I need these(personalwiki should always be first and
-" opened), keeping for reference
-" Always open diary pages in the personalwiki, never notes
-" nmap <Leader>i <Plug>VimwikiDiaryIndex
-" nmap <Leader>d <Plug>VimwikiMakeDiaryNote
-" nmap <Leader>dt <Plug>VimwikiTabMakeDiaryNote
-" nmap <Leader>dy <Plug>VimwikiMakeYesterdayDiaryNote
-" nmap <Leader>dm <Plug>VimwikiMakeTomorrowDiaryNote
 function SetExtraVimwikiMappings()
   nnoremap <silent> <leader>m :VimwikiToggleListItem<CR>
   vnoremap <silent> <leader>m :VimwikiToggleListItem<CR>
@@ -67,6 +58,10 @@ augroup END
 " fzf and fzf.vim
 " (Note that the macports fzf is automatically added to vim/macvim
 " path)
+
+" taken from rooter.txt, uses FindRootDirectory from vim-rooter
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(FindRootDirectory(), fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
 
 " Open fuzzy-search, leave a space for faster typing of search path
 nnoremap <Leader>f :Files 
@@ -163,29 +158,29 @@ endif
 " set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 
 " Only use LanguageClient for completion, not automatic linting
-let g:LanguageClient_diagnosticsEnable=0
-function SetLSPShortcuts()
-  nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
-  nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
-  nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
-  nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
-  nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
-  nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
-  nnoremap <leader>lc :call LanguageClient#textDocument_completion()<CR>
-  nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
-  nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
-  nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
-  " doesn't seem to work?
-  " for using 'gq' formatting
-  " setlocal formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
-endfunction()
+" let g:LanguageClient_diagnosticsEnable=0
+" function SetLSPShortcuts()
+"   nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
+"   nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
+"   nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
+"   nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
+"   nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
+"   nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
+"   nnoremap <leader>lc :call LanguageClient#textDocument_completion()<CR>
+"   nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
+"   nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+"   nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+"   " doesn't seem to work?
+"   " for using 'gq' formatting
+"   " setlocal formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
+" endfunction()
 
 " Only enable LanguageClient shortcuts and formatting for certain filetypes
-augroup LSP
-  autocmd!
-  autocmd FileType rust,ruby,go,python,javascript call SetLSPShortcuts()
-  autocmd FileType rust,ruby,go,python,javascript setlocal completefunc=LanguageClient#complete
-augroup END
+" augroup LSP
+"   autocmd!
+"   autocmd FileType rust,ruby,go,python,javascript call SetLSPShortcuts()
+"   autocmd FileType rust,ruby,go,python,javascript setlocal completefunc=LanguageClient#complete
+" augroup END
 
 " Can't define these in after/ftplugin as they are plugin-specific
 augroup lexical
@@ -213,10 +208,19 @@ let g:ulti_expand_or_jump_res = 0 "default value, just set once
 " let g:UltiSnipsJumpForwardTrigger = '<C-j>'
 " let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 
+" defaults
+let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsExpandSnippetOrJump="<tab>"
+let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+
+let g:UltiSnipsSnippetDirectories=["ultisnips", "splunksnippets"]
+
 " dense-analysis/ale
 " let LanguageClient-neovim handle LSP
 let g:ale_disable_lsp = 1
-let g:ale_linters = {'go': ['golangci-lint']}
+let g:ale_linters = {'go': ['golangci-lint'],
+      \              'rust': ['cargo','analyzer']}
 " let g:ale_linters_ignore = {'go': ['pylint']}
 " let g:ale_go_golangci_lint_options = '-c PATH'
 " let g:ale_go_golangci_lint_options = ''
@@ -224,16 +228,7 @@ let g:ale_linters = {'go': ['golangci-lint']}
 let g:ale_go_golangci_lint_options = '--fast --presets bugs,format,style,unused --disable godot,unused,lll,wsl' "'-c PATH'
 let g:ale_go_golangci_lint_package = 1
 
-{{- if eq .chezmoi.hostname "C02TBGUGTFM" }}
-" FIXME is this still in use?
-" arp242/gopher.vim
-" Don't automatically add default mappings
-let g:gopher_map = 0
-" Don't automatically install tool binaries
-let g:gopher_setup = ['no-auto-install']
-let g:gopher_map = {'_nmap_prefix': '<Leader>', '_imap_prefix': '<C-g>'}
-{{- end }}
-
+" arp242/gopher.vim REMOVED
 
 " tpope/vim-projectionist
 " let l:proj_json = readfile("~/.vim/plugin/projections.json")

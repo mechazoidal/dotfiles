@@ -4,7 +4,6 @@
 .ksh_completions
 .xsession
 {{ end }}
-
 {{ if ne .chezmoi.hostname "Judge-Spear" }}
 .bashrc_Judge-Spear
 .config/karabiner
@@ -13,4 +12,6 @@
 .bashrc_rynex
 .bash/aliases_rynex
 .config/nixpkgs
+.config/plasma-workspace
+.config/git/rynex
 {{ end }}

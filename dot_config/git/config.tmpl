@@ -2,38 +2,45 @@
 [user]
 	name = {{ .name }}
 	email = {{ .email }}
-{{ if eq .chezmoi.os "linux" }}
-[merge]
-	guitool = p4merge
-{{ end }}
 [push]
 	default = matching
-[alias]
-  # Read-only share
-  serve = !git daemon --reuseaddr --base-path=. --export-all ./.git --verbose
-  # read/write share
-  hub = !git daemon --reuseaddr --base-path=. --export-all --enable=receive-pack  --informative-errors --verbose
-
-  # from garybernhardt
-  st = status
-  ci = commit --verbose
-  co = checkout
-  di = diff
-  dc = diff --cached
-  amend = commit --amend
-  aa = add --all
-  ff = merge --ff-only
-  noff = merge --no-ff
-  fa = fetch --all
-  pom = push origin master
-  # ds
-  # dh1
-
-  # Divergence (commits we added and commits remote added)
-  div = divergence
-
-  # Goodness (summary of diff lines added/removed/total)
-  gn = goodness
-  gnc = goodness --cached
 [core]
+	autocrlf = input
+	ignorecase = false
+	safecrlf = warn
 	excludesfile = {{ joinPath .chezmoi.homedir ".gitignore_global" }}
+[alias]
+# Read-only share
+	serve = !git daemon --reuseaddr --base-path=. --export-all ./.git --verbose
+# read/write share
+	hub = !git daemon --reuseaddr --base-path=. --export-all --enable=receive-pack  --informative-errors --verbose
+
+# from garybernhardt
+	st = status
+	ci = commit --verbose
+	co = checkout
+	di = diff
+	dc = diff --cached
+	amend = commit --amend
+	aa = add --all
+	ff = merge --ff-only
+	noff = merge --no-ff
+	fa = fetch --all
+	pom = push origin master
+	ds = diff --stat=160,120
+	dh1 = diff HEAD~1
+
+# Divergence (commits we added and commits remote added)
+	div = divergence
+
+# Goodness (summary of diff lines added/removed/total)
+	gn = goodness
+	gnc = goodness --cached
+
+	fff = !git fetch && git merge --ff-only
+# List ages of last commit on all remote and local branches
+	bar = !git branch -rvv --format='%(committerdate:iso8601), %(committerdate:relative) - %(refname:short)' | sort
+	bal = !git branch -vv --format='%(committerdate:iso8601), %(committerdate:relative) - %(refname:short)' | sort
+{{- if (stat ( joinPath "dot_config/git" .chezmoi.hostname )) }}
+{{ include ( joinPath "dot_config/git" .chezmoi.hostname ) }}
+{{ end -}}

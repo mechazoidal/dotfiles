@@ -7,9 +7,19 @@
 {{- if not $email -}}
 {{-   $email = promptString "email" -}}
 {{- end -}}
+
+{{- $mpv_volume := get . "mpv_volume" -}}
+{{- if not $mpv_volume -}}
+{{-   $mpv_volume = 45 -}}
+{{- end -}}
+
+{{- $keepass_db := get . "keepass_db" -}}
+{{- if not $keepass_db -}}
+{{-   $keepass_db = (joinPath .chezmoi.homedir ".keepass" "accounts.kdbx") -}}
+{{- end -}}
 [data]
   name = {{ $name | quote }}
   email = {{ $email | quote }}
-  mpv_volume = 45
+  mpv_volume = {{ $mpv_volume | quote }}
 [keepassxc]
-  database = "/home/mecha/.keepass/accounts.kdbx"
+  database = {{ $keepass_db | quote }}

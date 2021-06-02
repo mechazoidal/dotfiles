@@ -3,12 +3,14 @@
 " source ~/.vimrc
 
 " The core fzf plugin needs to be enabled BEFORE the fzf.vim package is loaded
-" (the conditional is just a kludge to test if we're on osx or a unix)
-if isdirectory('/opt')
-  set runtimepath+=/opt/local/share/fzf/vim/
-else
-  set runtimepath+=/usr/local/share/fzf/vim
-endif
+{{- if (eq .chezmoi.os "darwin") }}
+set rtp+=/opt/local/share/fzf/vim/
+{{- else if (eq .chezmoi.os "linux") }}
+" set rtp+=/usr/local/share/fzf/vim
+set rtp+=/usr/local/share/vim/vimfiles
+{{- else }}
+set rtp+=/usr/local/share/vim/vimfiles
+{{- end }}
 " PLUGINS: LOAD
 " (vim-plug standard path: ~/.local/share/nvim/site/autoload/plug.vim)
 call plug#begin('~/.local/share/nvim/site/vim-plug')
@@ -36,13 +38,10 @@ Plug 'tpope/vim-vinegar'
 Plug 'vim-scripts/scratch.vim'
 Plug 'reedes/vim-lexical'
 Plug 'reedes/vim-wordy'
-" Plug 'w0rp/ale'
-Plug 'honza/vim-snippets'
-Plug 'SirVer/ultisnips'
-{{- if eq .chezmoi.hostname "work-laptop-placeholder" }}
-" Plug 'fatih/vim-go'
-" Plug 'Shougo/deoplete.nvim'
-{{- end }}
+Plug 'dense-analysis/ale'
+{{- if (stat (list "dot_vim/plugins" .chezmoi.hostname | join "_")) }}
+{{ include (list "dot_vim/plugins" .chezmoi.hostname | join "_") }}
+{{ end -}}
 
 " NOT WORKING: requires base neovim of 0.5+
 " Plug 'neovim/nvim-lsp'
