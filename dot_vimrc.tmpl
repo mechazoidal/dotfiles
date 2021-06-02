@@ -223,30 +223,6 @@ autocmd vimrc VimResized * wincmd =
 " kill buffer without closing split
 "command Bd bp\|bd \#
 
-{{- if ne .chezmoi.hostname "C02TBGUGTFM" }}
-" TRIAL
-" from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
-" THis is a slightly smarter tab-complete. It moves backwards in the menu to
-" avoid trickery with sending C-N after a Tab
-" COLLIDES with mucomplete
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col
-        return "\<tab>"
-    endif
-
-    let char = getline('.')[col - 1]
-    if char =~ '\k'
-        " There's an identifier before the cursor, so complete the identifier.
-        return "\<c-p>"
-    else
-        return "\<tab>"
-    endif
-endfunction
-inoremap <expr> <tab> InsertTabWrapper()
-inoremap <s-tab> <c-n>
-{{- end }}
-
 
 " FIXME because these are called from vimrc, they don't seem to work if moved
 " to an autoload script
