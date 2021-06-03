@@ -41,6 +41,6 @@
 # List ages of last commit on all remote and local branches
 	bar = !git branch -rvv --format='%(committerdate:iso8601), %(committerdate:relative) - %(refname:short)' | sort
 	bal = !git branch -vv --format='%(committerdate:iso8601), %(committerdate:relative) - %(refname:short)' | sort
-{{- if (stat ( joinPath "dot_config/git" .chezmoi.hostname )) }}
+{{- if (stat ( joinPath ".config/git" .chezmoi.hostname )) }}
 {{ include ( joinPath "dot_config/git" .chezmoi.hostname ) }}
 {{ end -}}

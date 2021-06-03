@@ -39,7 +39,7 @@ Plug 'vim-scripts/scratch.vim'
 Plug 'reedes/vim-lexical'
 Plug 'reedes/vim-wordy'
 Plug 'dense-analysis/ale'
-{{- if (stat (list "dot_vim/plugins" .chezmoi.hostname | join "_")) }}
+{{- if (stat (list ".vim/plugins" .chezmoi.hostname | join "_")) }}
 {{ include (list "dot_vim/plugins" .chezmoi.hostname | join "_") }}
 {{ end -}}
 

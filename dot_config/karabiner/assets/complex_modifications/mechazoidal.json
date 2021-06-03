@@ -62,6 +62,26 @@
       ]
     },
     {
+      "description": "Hyper-s: focus Slack",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "s",
+            "modifiers": {
+              "mandatory": [
+                "left_shift",
+                "left_command",
+                "left_control",
+                "left_option"
+              ]
+            }
+          },
+          "to": [{"shell_command": "open -a 'Slack.app'"}],
+          "type": "basic"
+        }
+      ]
+    },
+    {
       "description": "Hyper-c: focus Chrome",
       "manipulators": [
         {
@@ -117,6 +137,46 @@
             }
           },
           "to": [{"shell_command": "open -a 'KeepassXC.app'"}],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Hyper-j: focus Joplin",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "j",
+            "modifiers": {
+              "mandatory": [
+                "left_shift",
+                "left_command",
+                "left_control",
+                "left_option"
+              ]
+            }
+          },
+          "to": [{"shell_command": "open -a 'Joplin.app'"}],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "Hyper-e: focus emacs",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "e",
+            "modifiers": {
+              "mandatory": [
+                "left_shift",
+                "left_command",
+                "left_control",
+                "left_option"
+              ]
+            }
+          },
+          "to": [{"shell_command": "open -a 'Emacs.app'"}],
           "type": "basic"
         }
       ]

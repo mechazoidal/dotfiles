@@ -21,12 +21,17 @@ Plug 'airblade/vim-rooter'
 "     \ 'branch': 'next',
 "     \ 'do': 'bash install.sh',
 "     \ }
-{{- if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "nixos")) }}
+{{- if (eq .chezmoi.os "linux") }}
+{{-  if (eq .chezmoi.osRelease.id "nixos") }}
 " FIXME nixos 20.09 only: must lock fzf and fzf.vim to 0.22 since nix doesn't ship the
 " newer version yet
 Plug 'junegunn/fzf', { 'tag': '0.22.0' }
 Plug 'junegunn/fzf.vim', { 'commit': '18205e071dc701ed9ca51971466b9997cd3d0778' }
-{{ else }}
+{{  else }}
+Plug 'junegunn/fzf.vim'
+{{  end -}}
+{{ end -}}
+{{- if (eq .chezmoi.os "darwin") }}
 Plug 'junegunn/fzf.vim'
 {{ end -}}
 Plug 'mbbill/undotree'
@@ -53,7 +58,7 @@ Plug 'dense-analysis/ale'
 Plug 'AndrewRadev/bufferize.vim'
 Plug 'markonm/traces.vim'
 Plug 'mattn/emmet-vim'
-{{ if (stat (list "dot_vim/plugins" .chezmoi.hostname | join "_")) }}
+{{ if (stat (list ".vim/plugins" .chezmoi.hostname | join "_")) }}
 {{ include (list "dot_vim/plugins" .chezmoi.hostname | join "_") }}
 {{ end }}
 call plug#end()
