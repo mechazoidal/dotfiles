@@ -30,8 +30,7 @@ Plug 'junegunn/fzf.vim', { 'commit': '18205e071dc701ed9ca51971466b9997cd3d0778' 
 {{  else }}
 Plug 'junegunn/fzf.vim'
 {{  end -}}
-{{ end -}}
-{{- if (eq .chezmoi.os "darwin") }}
+{{ else }}
 Plug 'junegunn/fzf.vim'
 {{ end -}}
 Plug 'mbbill/undotree'
