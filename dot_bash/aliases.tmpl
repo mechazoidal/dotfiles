@@ -21,4 +21,4 @@ alias twd='timew summary :day'
 # mpv + youtube-dl for playing audio from youtube
 alias mpvmv='mpv --profile=video-music'
 
-{{ include (list "dot_bash/aliases" .chezmoi.hostname | join "_") }}
+{{ include (list "dot_bash/aliases" (.chezmoi.hostname | splitList "." | first) | join "_") }}

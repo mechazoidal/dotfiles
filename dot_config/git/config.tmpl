@@ -8,7 +8,7 @@
 	autocrlf = input
 	ignorecase = false
 	safecrlf = warn
-	excludesfile = {{ joinPath .chezmoi.homedir ".gitignore_global" }}
+	excludesfile = {{ joinPath .chezmoi.homeDir ".gitignore_global" }}
 [alias]
 # Read-only share
 	serve = !git daemon --reuseaddr --base-path=. --export-all ./.git --verbose

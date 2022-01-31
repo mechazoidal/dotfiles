@@ -1,1 +1,1 @@
-.bashrc_{{ .chezmoi.hostname }}
+.bashrc_{{ .chezmoi.hostname | splitList "." | first }}
