@@ -1,0 +1,13 @@
+XTerm*termName : xterm-256color
+XTerm*vt100.metaSendsEscape : true
+XTerm*vt100.saveLines : 5000
+XTerm*vt100.bellIsUrgent : true
+! don't allow newlines when copying
+XTerm*cutNewline : false
+! OSX-like behavior: select word on double-click, the entire line on a triple-click
+XTerm*on2Clicks : word
+XTerm*on3Clicks : line
+XTerm*faceName: Inconsolata
+XTerm*faceSize: 15
+XTerm*loginShell:true
+

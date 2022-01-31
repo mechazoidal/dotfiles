@@ -8,8 +8,8 @@ xset +fp /usr/local/share/fonts/fira/
 xset +fp /usr/local/share/fonts/roboto
 xset fp rehash
 
-# load Xdefaults(Xresources) file
-xrdb -merge $HOME/.Xdefaults
+# load Xresources file(s)
+xrdb -merge $HOME/.Xresources
 
 # Must use external config to get multiple options: in this case, both nocaps and altwin
 setxkbmap -config $HOME/.config/xkb/config
@@ -38,11 +38,6 @@ export PATH=$PATH:$CLJ_HOME/bin
 # This ensures that cargo-installed executables(like rg) get picked up
 export RUST_BIN=$HOME/.cargo/bin
 export PATH=$PATH:/$RUST_BIN
-
-# yarn setup
-export YARN_BIN=$HOME/yarn/bin
-export YARN_USER_BIN=`$HOME/yarn/bin/yarn global bin`
-export PATH=$PATH:$YARN_BIN:$YARN_USER_BIN
 
 # screen locker
 # (unused for now due to incident where it failed to UNLOCK on lid-open)

@@ -1,0 +1,7 @@
+! drag pointer to lower-left to lock screen
+XIdle*position : sw
+! lock screen after 2secs from pointer
+XIdle*delay : 2
+! Lock screen after 5 minutes
+XIdle*timeout : 300
+
