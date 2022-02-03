@@ -1,8 +1,9 @@
 {{ if ne .chezmoi.os "openbsd" }}
-.Xdefaults
+.Xresources
 .kshrc
 .ksh_completions
 .xsession
+.xres
 {{ end }}
 {{ if ne .chezmoi.hostname "Judge-Spear" }}
 .bashrc_Judge-Spear
