@@ -1,0 +1,35 @@
+local Plug = vim.fn['plug#']
+
+vim.call('plug#begin', '~/.config/nvim/plugged')
+
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-unimpaired'
+Plug 'folke/which-key.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug('nvim-treesitter/nvim-treesitter', {['do'] = vim.fn[':TSUpdate']})
+Plug('neovim/nvim-lspconfig')
+Plug('mhinz/vim-grepper')
+{{- if (eq .chezmoi.os "openbsd") }}
+-- Must lock to 0.5.0 until neovim package is updated
+Plug('nvim-telescope/telescope.nvim', {tag = 'nvim-0.5.0'})
+{{ else }}
+Plug('nvim-telescope/telescope.nvim')
+{{ end -}}
+Plug('nvim-telescope/telescope-fzf-native.nvim')
+-- undotree
+-- bqf
+-- fzf.vim ?
+-- impatient.nvim
+
+vim.call('plug#end')
+
+-- keep personal configs in a 'user' module
+require 'user.utils'
+require 'user.settings'
+require 'user.treesitter'
+require 'user.lsp'
+require 'user.whichkey'
+require 'user.telescope'
+
