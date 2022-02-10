@@ -6,19 +6,21 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
-Plug 'folke/which-key.nvim'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'folke/which-key.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'mhinz/vim-grepper'
+Plug 'mbbill/undotree'
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = vim.fn[':TSUpdate']})
-Plug('neovim/nvim-lspconfig')
-Plug('mhinz/vim-grepper')
 {{- if (eq .chezmoi.os "openbsd") }}
 -- Must lock to 0.5.0 until neovim package is updated
+Plug('mfussenegger/nvim-lint', {tag='nvim-05'})
 Plug('nvim-telescope/telescope.nvim', {tag = 'nvim-0.5.0'})
 {{ else }}
-Plug('nvim-telescope/telescope.nvim')
+Plug 'mfussenegger/nvim-lint'
+Plug 'nvim-telescope/telescope.nvim'
 {{ end -}}
-Plug('nvim-telescope/telescope-fzf-native.nvim')
--- undotree
+Plug 'nvim-telescope/telescope-fzf-native.nvim'
 -- bqf
 -- fzf.vim ?
 -- impatient.nvim
@@ -32,4 +34,5 @@ require 'user.treesitter'
 require 'user.lsp'
 require 'user.whichkey'
 require 'user.telescope'
+require 'user.undotree'
 

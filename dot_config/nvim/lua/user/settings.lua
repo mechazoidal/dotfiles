@@ -1,7 +1,6 @@
 vim.o.undofile = true
-vim.o.undodir = vim.fn.stdpath 'cache' .. '/undo'
 vim.o.backup = true
-vim.o.backupdir = vim.fn.stdpath 'data' .. '/backup'
+vim.o.backupdir = vim.fn.stdpath 'data' .. '/backup//'
 -- TODO look into shada , shadafile
 
 -- indent wrapped lines, by...
@@ -61,3 +60,4 @@ vim.g.maplocalleader = ' '
 -- function! RemoveFancyCharacters()
 -- TODO
 -- toggle loclist / quickfix list
+
