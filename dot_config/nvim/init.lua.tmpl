@@ -2,9 +2,12 @@ local Plug = vim.fn['plug#']
 
 vim.call('plug#begin', '~/.config/nvim/plugged')
 
+-- TODO find reason of conflicting keymap
 Plug 'tpope/vim-commentary'
+-- TODO find reason of conflicting keymap
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+-- TODO copy my preferred unimpaired mappings to lua
 Plug 'tpope/vim-unimpaired'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/which-key.nvim'
@@ -35,5 +38,8 @@ require 'user.lsp'
 require 'user.whichkey'
 require 'user.telescope'
 require 'user.undotree'
+require 'user.grepper'
 require 'user.bqf'
 
+-- TODO should guard this with 'does colorscheme exist'
+vim.cmd("colorscheme zenburn")

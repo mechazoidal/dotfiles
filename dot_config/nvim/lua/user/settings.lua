@@ -58,6 +58,3 @@ vim.g.maplocalleader = ' '
 -- " change all fancy characters to their ascii equivs(", ', etc.)
 -- " from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc#L615
 -- function! RemoveFancyCharacters()
--- TODO
--- toggle loclist / quickfix list
-

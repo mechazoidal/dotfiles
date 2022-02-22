@@ -1,24 +1,25 @@
--- FIXME how to define this where which-key can pick it up?
--- FIXME internet code, there's probably a cleaner version inside
-local M = {
-  toggle_qf = function()
-  local qf_open = false
+local M = {}
+
+M.toggle_qf = function()
+  local qf_exists = false
   for _, win in pairs(vim.fn.getwininfo()) do
     if win["quickfix"] == 1 then
-      qf_open = true
+      qf_exists = true
     end
   end
-  if qf_open == true then
-    vim.cmd("cclose")
+  if qf_exists == true then
+    vim.cmd "cclose"
     return
   end
   if not vim.tbl_isempty(vim.fn.getqflist()) then
-    vim.cmd("copen")
+    vim.cmd "copen"
+  else
+    print("qf: no items")
   end
 end
-}
 
 local wk = require("which-key")
+-- TODO map F1 to `:h`
 wk.register({
   ["<leader>"] = {
       name = "+misc",
@@ -26,7 +27,7 @@ wk.register({
       w = {[[<C-w>v<C-w>l]], "Split window vertically"},
       v = {[[<C-w>s<C-w>k]], "Split window horizontally"},
       W = {[[:%s/\s\+$//<cr>:let @/=''<CR>]], "strip all trailing whitespace in the current file"},
-      q = {M.toggle_qf, "Toggle the Quickfix window"}
+      q = {M.toggle_qf, "Toggle the Quickfix window"},
   },
   -- Window-splitting helpers
   ["<C-h>"] = {[[<C-w>h]], "Move to left window"},
@@ -35,10 +36,19 @@ wk.register({
   ["<C-l>"] = {[[<C-w>l]], "Move to right window"},
   -- FIXME doesn't show in the command line until first char hit
   [";"] = {[[:]], "Make ; do the same thing as :"},
-  ["K"] = {[[i<CR><ESC>h]], "Split line at cursor"},
   ["Y"] = {[[y$]], "Make Y apply from cursor to end of line"},
 })
 
 wk.register({
   ['jj'] = {[[<ESC>]], "exit insert mode"},
 }, {mode = "i"})
+
+-- TRIAL
+-- https://old.reddit.com/r/vim/comments/2mj7w7/vim_and_kinesis_advantage_pro/cm5gqcg/
+-- wk.register({
+--   ["<CR>"] = {[[<ESC>]], "Map enter to escape in insert mode"},
+-- }, {mode = "i"})
+
+  -- wk.register({
+  --   ["K"] = {[[i<CR><ESC>h]], "Split line at cursor"},
+  -- })
