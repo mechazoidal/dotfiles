@@ -30,8 +30,8 @@ self: super:
       #ipmiutil
       joplin-desktop
       kate
-      kdeApplications.kio-extras
-      kdeApplications.spectacle
+      libsForQt5.kio-extras
+      libsForQt5.spectacle
       keepassxc
       lftp
       less
@@ -39,8 +39,10 @@ self: super:
       lsof
       mupdf
       openjdk
+      OSCAR
       #pinentry-qt
       #plasma5.breeze-qt5
+      recoll
       scowl
       SDL2
       # p4v

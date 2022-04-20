@@ -19,6 +19,7 @@ self: super:
       graphviz
       git
       jq
+      neovim
       niv
       nmap
       mercurial

@@ -15,4 +15,5 @@ alias kcx='kubectl ctx'
 alias kcl='kubectl'
 alias kcn='kubectl ns'
 
-
+# for rsyncing with NFS shares instead of using '-a': skip ownership+devices
+alias rsync-nfs='rsync -rplt --info=progress2'
