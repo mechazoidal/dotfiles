@@ -31,3 +31,6 @@ eval "$(zoxide init bash)"
 # Ruby
 # This ensures that gem executables(like bundler) get picked up
 export PATH=$PATH:$GEM_HOME/bin
+
+# not sure if this should be here or in .profile
+export PATH=$HOME/.local/bin:$PATH
