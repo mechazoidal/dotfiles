@@ -10,22 +10,21 @@ Plug 'tpope/vim-repeat'
 -- TODO copy my preferred unimpaired mappings to lua
 Plug 'tpope/vim-unimpaired'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lua/popup.nvim'
 Plug 'folke/which-key.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'mhinz/vim-grepper'
 Plug 'mbbill/undotree'
-Plug('nvim-treesitter/nvim-treesitter', {['do'] = vim.fn[':TSUpdate']})
-{{- if (eq .chezmoi.os "openbsd") }}
--- Must lock to 0.5.0 until neovim package is updated
-Plug('mfussenegger/nvim-lint', {tag='nvim-05'})
-Plug('nvim-telescope/telescope.nvim', {tag = 'nvim-0.5.0'})
-{{ else }}
+-- Lock to last commit before their version bump to nvim 7+
+Plug('nvim-treesitter/nvim-treesitter', {commit = '8a1acc00d', ['do'] = vim.fn[':TSUpdate']})
 Plug 'mfussenegger/nvim-lint'
-Plug 'nvim-telescope/telescope.nvim'
-{{ end -}}
+-- Lock to 0.6.0 for sanity
+Plug('nvim-telescope/telescope.nvim', {tag = 'nvim-0.6'})
 Plug 'nvim-telescope/telescope-fzf-native.nvim'
 Plug 'junegunn/fzf.vim'
 Plug 'kevinhwang91/nvim-bqf'
+Plug 'natecraddock/workspaces.nvim'
+Plug 'delphinus/agrp.nvim'
 -- impatient.nvim
 
 vim.call('plug#end')
@@ -40,6 +39,8 @@ require 'user.telescope'
 require 'user.undotree'
 require 'user.grepper'
 require 'user.bqf'
+require 'user.workspaces'
+require 'user.lint'
 
 -- TODO should guard this with 'does colorscheme exist'
 vim.cmd("colorscheme zenburn")
