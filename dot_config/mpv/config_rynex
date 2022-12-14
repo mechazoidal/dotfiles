@@ -1,0 +1,4 @@
+# TODO find where the config-maintainer file is for nix, crib from that
+
+profile=gpu-hq # use high-quality OpenGL options
+

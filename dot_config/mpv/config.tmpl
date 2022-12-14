@@ -9,19 +9,6 @@ ytdl-format=bestaudio/best
 demuxer-max-bytes=20M
 
 [default]
-{{ if eq .chezmoi.os "darwin" -}}
-hwdec=auto
-
-# if you need to use CPU filters or others, this setting allows HW playback IF it copies the frame back to system memory
-#hwdec=auto-copy
-
-{{ else if eq .chezmoi.os "linux" -}}
-# TODO find where the config-maintainer file is for nix, crib from that
-
-
-profile=gpu-hq # use high-quality OpenGL options
-{{ end -}}
-
 # Keep starting volume sane
 volume={{ .mpv_volume }}
 
@@ -29,3 +16,7 @@ ytdl
 ytdl-format=best
 # Always choose english subtitles
 slang=en
+
+{{ if stat (joinPath .chezmoi.homeDir ".config" "mpv" (join "_" (list "config" .chezmoi.hostname))) }}
+{{ include (joinPath .chezmoi.homeDir ".config" "mpv" (join "_" (list "config" .chezmoi.hostname))) }}
+{{ end -}}

@@ -1,0 +1,5 @@
+vo=libmpv # vo=gpu is deprecated as of 0.35
+ao=coreaudio
+# hwdec=auto
+hwdec=videotoolbox # OSX-specific
+# framedrop=vo # mpv default
