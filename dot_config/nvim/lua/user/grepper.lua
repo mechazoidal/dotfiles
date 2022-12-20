@@ -11,7 +11,7 @@ local wk = require("which-key")
 wk.register({
   ["<leader>"] = {
       name = "Grepper",
-      r = {[[:Grepper -tool rg<cr>]], "rg"},
+      r = {[[:Grepper -tool rg<cr>]], "Grepper: ripgrep"},
       -- FIXME this has same problem showing up like other ':' cmds
       -- r = {[[:GrepperRg ]], "rg"},
   },

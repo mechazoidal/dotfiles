@@ -18,6 +18,24 @@ M.toggle_qf = function()
   end
 end
 
+M.toggle_ll = function()
+  local ll_exists = false
+  for _, win in pairs(vim.fn.getwininfo()) do
+    if win["loclist"] == 1 then
+      ll_exists = true
+    end
+  end
+  if ll_exists == true then
+    vim.cmd "lclose"
+    return
+  end
+  if not vim.tbl_isempty(vim.fn.getqflist()) then
+    vim.cmd "lopen"
+  else
+    print("loclist: none")
+  end
+end
+
 local wk = require("which-key")
 -- TODO map F1 to `:h`
 wk.register({
@@ -27,7 +45,9 @@ wk.register({
       w = {[[<C-w>v<C-w>l]], "Split window vertically"},
       v = {[[<C-w>s<C-w>k]], "Split window horizontally"},
       W = {[[:%s/\s\+$//<cr>:let @/=''<CR>]], "strip all trailing whitespace in the current file"},
-      q = {M.toggle_qf, "Toggle the Quickfix window"},
+      -- TODO should I just use telescope's loclist / quickfix pickers
+      -- q = {M.toggle_qf, "Toggle the Quickfix window"},
+      -- l = {M.toggle_ll, "Toggle the location list window"},
   },
   -- Window-splitting helpers
   ["<C-h>"] = {[[<C-w>h]], "Move to left window"},
