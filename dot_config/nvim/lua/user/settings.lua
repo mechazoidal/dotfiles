@@ -1,11 +1,12 @@
+-- Core nvim settings
 vim.o.undofile = true
 vim.o.backup = true
 vim.o.backupdir = vim.fn.stdpath 'data' .. '/backup//'
 -- TODO look into shada , shadafile
 
--- indent wrapped lines, by...
+-- indent wrapped lines, by indenting them another level 
+-- and showing 'showbreak' char
 vim.o.breakindent = true
--- indenting them another level and showing 'showbreak' char
 vim.o.breakindentopt = "shift:4,sbr" 
 -- vim.o.listchars = [[tab:▸\ ,eol:¬]]
 -- vim.o.showbreak = [[↪]]
@@ -48,8 +49,6 @@ vim.o.clipboard = 'unnamedplus'
 -- vim.o.clipboard = 'unnamed,unnamedplus'
 
 -- Space as leader
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
--- utils.map('', '<Space>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 

@@ -2,11 +2,14 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = { 
     "bash", 
     "comment",
+    "dockerfile",
+    "dot",
     "go",
     "gomod",
     "hcl",
     "javascript",
     "json",
+    "jsonnet",
     "lua",
     "make",
     "python",
@@ -17,6 +20,7 @@ require'nvim-treesitter.configs'.setup {
     "yaml",
   },
   sync_install = false,
+  auto_install = false,
 
   highlight = {
     enable = true,

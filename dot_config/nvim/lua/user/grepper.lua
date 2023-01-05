@@ -1,23 +1,21 @@
--- TODO original vim config
--- FIXME not sure if running into:
--- https://github.com/nanotee/nvim-lua-guide#caveats-3
--- as `g:grepper` does NOT exist when this file is called.
--- let g:grepper.rg.grepprg .= ' --smart-case'
--- let g:grepper.operator.prompt = 1
--- let g:grepper.operator.tool = 'rg'
--- let g:grepper.dir = 'repo,filecwd'
-
 local wk = require("which-key")
 wk.register({
+  -- TODO move under leader-g ?
   ["<leader>"] = {
-      name = "Grepper",
       r = {[[:Grepper -tool rg<cr>]], "Grepper: ripgrep"},
-      -- FIXME this has same problem showing up like other ':' cmds
-      -- r = {[[:GrepperRg ]], "rg"},
   },
 })
 
--- TODO cannot define both operator mappings in one block yet:
+-- This is the ONLY way I've found to modify the defaults.
+-- The table does NOT exist in vim.g at any startupfile hook(including after/plugin)
+-- and setting the table through lua overwrites ALL defaults.
+-- (possibly due to grepper being a pure Vimscript plugin?)
+vim.cmd([[
+runtime plugin/grepper.vim
+let g:grepper.dir = 'repo,filecwd'
+]])
+
+-- cannot define both operator mappings in one block (yet?)
 -- https://github.com/folke/which-key.nvim/issues/56
 wk.register {
   ["g"] = {
@@ -26,10 +24,16 @@ wk.register {
 }
 wk.register {
   ["g"] = {
-    name = "+grepper",
-    s = {"<Plug>(GrepperOperator)", "operator"},
+    s = {"<Plug>(GrepperOperator)", "+grepper"},
   },
 }
 
--- TODO examine grepper settings from:
--- https://github.com/kevinhwang91/nvim-bqf#integrate-with-other-plugins
+-- bqf integration
+-- TODO move these into lua
+vim.cmd(([[
+    aug Grepper
+        au!
+        au User Grepper ++nested %s
+    aug END
+]]):format([[call setqflist([], 'r', {'context': {'bqf': {'pattern_hl': '\%#' . getreg('/')}}})]]))
+

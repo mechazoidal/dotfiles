@@ -1,5 +1,3 @@
--- vim.diagnostic.setqflist()
--- vim.diagnostic.config({virtual_text = false})
 require('lint').linters_by_ft = {
   -- markdown = {'vale',}
   sh = {'shellcheck',},
@@ -9,14 +7,8 @@ require('lint').linters_by_ft = {
   python = {'flake8',},
   yaml = {'yamllint',},
 }
-
-require'agrp'.set{
-  Linting = {
-    ['BufRead,InsertLeave,BufWritePost'] = {
-      {'*', require('lint').try_lint},
-      {'*', require('lint').try_lint},
-      {'*', require('lint').try_lint},
-    },
-  },
-}
-
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  callback = function()
+    require("lint").try_lint()
+  end,
+})

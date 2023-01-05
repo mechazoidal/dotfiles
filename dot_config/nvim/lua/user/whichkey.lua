@@ -1,20 +1,24 @@
 local M = {}
 
+-- adapted from:
+-- https://github.com/kevinhwang91/nvim-bqf/issues/35
 M.toggle_qf = function()
-  local qf_exists = false
+  local qf_open = false
   for _, win in pairs(vim.fn.getwininfo()) do
     if win["quickfix"] == 1 then
-      qf_exists = true
+      qf_open = true
     end
   end
-  if qf_exists == true then
+  if qf_open == true then
     vim.cmd "cclose"
     return
   end
   if not vim.tbl_isempty(vim.fn.getqflist()) then
     vim.cmd "copen"
-  else
-    print("qf: no items")
+  end
+  -- save last cursor position in list
+  if vim.b.bqf_enabled then
+    vim.api.nvim_feedkeys([['"]], 'im', false)
   end
 end
 
@@ -29,34 +33,45 @@ M.toggle_ll = function()
     vim.cmd "lclose"
     return
   end
-  if not vim.tbl_isempty(vim.fn.getqflist()) then
+  if not vim.tbl_isempty(vim.fn.getloclist(0)) then
     vim.cmd "lopen"
-  else
-    print("loclist: none")
   end
 end
 
 local wk = require("which-key")
--- TODO map F1 to `:h`
+wk.setup {
+  plugins = {
+    presets = {
+      -- workaround for inconsistent timeoutlen:
+      -- https://github.com/folke/which-key.nvim/issues/152
+      operators = false
+    }
+  },
+}
+
+wk.register({
+  name = "Window",
+    w = {[[<C-w>v<C-w>l]], "Split vertically"},
+    v = {[[<C-w>s<C-w>k]], "Split horizontally"},
+    q = {M.toggle_qf, "Toggle quickfix"},
+    l = {M.toggle_ll, "Toggle location list"},
+}, { prefix = "<leader>w"})
+
+-- if you want to set function keys
+-- https://github.com/folke/which-key.nvim/issues/321#issuecomment-1237877928
 wk.register({
   ["<leader>"] = {
-      name = "+misc",
-      n = {[[:noh<cr>]], "Clear out search results"},
-      w = {[[<C-w>v<C-w>l]], "Split window vertically"},
-      v = {[[<C-w>s<C-w>k]], "Split window horizontally"},
-      W = {[[:%s/\s\+$//<cr>:let @/=''<CR>]], "strip all trailing whitespace in the current file"},
-      -- TODO should I just use telescope's loclist / quickfix pickers
-      -- q = {M.toggle_qf, "Toggle the Quickfix window"},
-      -- l = {M.toggle_ll, "Toggle the location list window"},
+      [","] = {[[:noh<cr>]], "Clear out search results"},
+      W = {[[:%s/\s\+$//<cr>:let @/=''<CR>]], "Strip all trailing whitespace"},
   },
-  -- Window-splitting helpers
+  [";"] = {[[:]], "Alias: :"},
+  ["Y"] = {[[y$]], "Alias: y$"},
+  -- Window-navigation helpers
   ["<C-h>"] = {[[<C-w>h]], "Move to left window"},
   ["<C-j>"] = {[[<C-w>j]], "Move to upper window"},
   ["<C-k>"] = {[[<C-w>k]], "Move to lower window"},
+  -- FIXME which-key complains this is overwriting a nohlsearch binding
   ["<C-l>"] = {[[<C-w>l]], "Move to right window"},
-  -- FIXME doesn't show in the command line until first char hit
-  [";"] = {[[:]], "Make ; do the same thing as :"},
-  ["Y"] = {[[y$]], "Make Y apply from cursor to end of line"},
 })
 
 wk.register({
@@ -72,3 +87,4 @@ wk.register({
   -- wk.register({
   --   ["K"] = {[[i<CR><ESC>h]], "Split line at cursor"},
   -- })
+

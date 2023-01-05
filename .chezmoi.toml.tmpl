@@ -15,11 +15,18 @@
 
 {{- $keepass_db := get . "keepass_db" -}}
 {{- if not $keepass_db -}}
-{{-   $keepass_db = (joinPath .chezmoi.homedir ".keepass" "accounts.kdbx") -}}
+{{-   $keepass_db = (joinPath .chezmoi.homeDir ".keepass" "accounts.kdbx") -}}
 {{- end -}}
+
+{{- $osid := .chezmoi.os -}}
+{{- if hasKey .chezmoi.osRelease "id" -}}
+{{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+
 [data]
   name = {{ $name | quote }}
   email = {{ $email | quote }}
+  osid = {{ $osid | quote }}
   mpv_volume = {{ $mpv_volume | quote }}
 [keepassxc]
   database = {{ $keepass_db | quote }}
