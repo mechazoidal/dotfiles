@@ -9,12 +9,11 @@ self: super:
       # ark # kde qt5 breezedecoration
       bat
       bc
-      # chezmoi # use unstable.chezmoi instead until 2.0+ is in stable
+      chezmoi
       direnv
       doxygen
       fd
       ffmpeg
-      # ffmpegthumbs # kde qt5 breezedecoration
       fzf
       graphviz
       git
@@ -37,11 +36,11 @@ self: super:
       socat
       sox
       timewarrior
-      vim
+      vimHugeX # only way to get xterm_clipboard
       wordnet
-      youtube-dl
+      # youtube-dl # easier just to maintain a separate nix-shell
       zip
-      # zoxide # use unstable.zoxide instead
+      zoxide
     ];
   };
 }

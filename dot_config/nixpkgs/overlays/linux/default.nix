@@ -11,7 +11,7 @@ self: super:
       chromium
       deadpixi-sam-unstable
       ddrescue
-      perl530Packages.ImageExifTool
+      perl534Packages.ImageExifTool
       f3
       firefox
       filezilla
@@ -30,6 +30,7 @@ self: super:
       #ipmiutil
       joplin-desktop
       kate
+      libsForQt5.kdeconnect-kde
       libsForQt5.kio-extras
       libsForQt5.spectacle
       keepassxc
@@ -37,6 +38,7 @@ self: super:
       less
       libusb
       lsof
+      meld
       mupdf
       openjdk
       OSCAR

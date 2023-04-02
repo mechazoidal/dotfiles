@@ -12,6 +12,7 @@ self: super:
       dvdauthor
       dvdbackup
       glxinfo
+      #glimpse
       gst_all_1.gstreamer
       handbrake
       libdvdcss
