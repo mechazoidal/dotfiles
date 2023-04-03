@@ -1,11 +1,12 @@
+-- Core nvim settings
 vim.o.undofile = true
 vim.o.backup = true
 vim.o.backupdir = vim.fn.stdpath 'data' .. '/backup//'
 -- TODO look into shada , shadafile
 
--- indent wrapped lines, by...
+-- indent wrapped lines, by indenting them another level 
+-- and showing 'showbreak' char
 vim.o.breakindent = true
--- indenting them another level and showing 'showbreak' char
 vim.o.breakindentopt = "shift:4,sbr" 
 -- vim.o.listchars = [[tab:▸\ ,eol:¬]]
 -- vim.o.showbreak = [[↪]]
@@ -43,13 +44,12 @@ vim.opt.spelllang:prepend("en_us")
 vim.opt.wildmode:prepend('longest:full')
 vim.opt.wildignore:prepend('*.dll,*.o,*.pyc,*.bak,*.exe,*.jpg,*.jpeg,*.png,*.gif,*$py.class,*.class')
 
-vim.o.clipboard = 'unnamedplus'
+-- :help provider-clipboard 
+-- vim.o.clipboard = 'unnamedplus'
 -- FIXME needs to be config'd special on windows
 -- vim.o.clipboard = 'unnamed,unnamedplus'
 
 -- Space as leader
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
--- utils.map('', '<Space>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -58,3 +58,12 @@ vim.g.maplocalleader = ' '
 -- " change all fancy characters to their ascii equivs(", ', etc.)
 -- " from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc#L615
 -- function! RemoveFancyCharacters()
+
+local vimrc_group = vim.api.nvim_create_augroup('vimrc', { clear = true })
+
+-- Save all on focus lost
+vim.api.nvim_create_autocmd({ "FocusLost" }, {
+  pattern = {"*"},
+  group = vimrc_group,
+  command = "wall"
+})

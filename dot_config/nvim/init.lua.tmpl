@@ -1,46 +1,78 @@
 local Plug = vim.fn['plug#']
 
+-- The core fzf plugin needs to be loaded BEFORE anything else using fzf.vim
+{{- if eq .osid "darwin" }}
+vim.cmd('so ' .. vim.fs.normalize('/opt/local/share/fzf/vim/plugin/fzf.vim'))
+{{- else if eq .osid "linux-nixos" }}
+vim.cmd('so ' .. vim.fs.normalize('{{ output "nix-build" "<nixpkgs>" "--no-build-output" "-A" "fzf" | trim }}/share/vim-plugins/fzf/plugin/fzf.vim'))
+{{- else }}
+vim.cmd('so ' .. vim.fs.normalize('/usr/local/share/vim/vimfiles/plugin/fzf.vim'))
+{{- end }}
 vim.call('plug#begin', '~/.config/nvim/plugged')
 
--- TODO find reason of conflicting keymap
 Plug 'tpope/vim-commentary'
 -- TODO find reason of conflicting keymap
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
--- TODO copy my preferred unimpaired mappings to lua
+Plug 'tpope/vim-abolish'
+-- TODO find reason of conflicting keymap
+-- TODO copy my preferred unimpaired mappings to lua instead of using the plugin
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-fugitive'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-lua/popup.nvim'
 Plug 'folke/which-key.nvim'
-Plug 'neovim/nvim-lspconfig'
-Plug 'mhinz/vim-grepper'
 Plug 'mbbill/undotree'
--- Lock to last commit before their version bump to nvim 7+
-Plug('nvim-treesitter/nvim-treesitter', {commit = '8a1acc00d', ['do'] = vim.fn[':TSUpdate']})
-Plug 'mfussenegger/nvim-lint'
--- Lock to 0.6.0 for sanity
-Plug('nvim-telescope/telescope.nvim', {tag = 'nvim-0.6'})
+Plug 'mhinz/vim-grepper'
+Plug('nvim-treesitter/nvim-treesitter', {['do'] = vim.fn[':TSUpdate']})
+Plug('nvim-telescope/telescope.nvim', {tag = '0.1.0'})
 Plug 'nvim-telescope/telescope-fzf-native.nvim'
+-- TODO might be better to copy specific LS setup blocks into this config to use new autocmds
+Plug 'neovim/nvim-lspconfig'
 Plug 'junegunn/fzf.vim'
 Plug 'kevinhwang91/nvim-bqf'
 Plug 'natecraddock/workspaces.nvim'
-Plug 'delphinus/agrp.nvim'
--- impatient.nvim
+-- Plug 'vimwiki/vimwiki'
+-- Plug 'ElPiloto/telescope-vimwiki.nvim'
+Plug 'mfussenegger/nvim-lint'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+Plug 'rafamadriz/friendly-snippets'
+Plug 'aklt/plantuml-syntax'
+{{ if stat (joinPath .chezmoi.homeDir ".config" "nvim" (join "_" (list "plugins" .chezmoi.hostname))) }}
+{{ include (joinPath .chezmoi.homeDir ".config" "nvim" (join "_" (list "plugins" .chezmoi.hostname))) }}
+{{ end -}}
 
+Plug('tpope/vim-dispatch')
 vim.call('plug#end')
 
+{{- if eq .osid "darwin" }}
+vim.g.python3_host_prog = "/opt/local/bin/python3"
+{{- else if eq .osid "linux-nixos" }}
+vim.g.python3_host_prog = "{{ output "nix-build" "<nixpkgs>" "--no-build-output" "-A" "python3" | trim }}"
+{{- else }}
+vim.g.python3_host_prog = "/usr/bin/python3"
+{{- end }}
+
+{{ if stat (joinPath .chezmoi.homeDir ".config" "nvim" (join "_" (list "settings" .chezmoi.hostname))) }}
+{{ include (joinPath .chezmoi.homeDir ".config" "nvim" (join "_" (list "settings" .chezmoi.hostname))) }}
+{{ end -}}
 -- keep personal configs in a 'user' module
-require 'user.utils'
 require 'user.settings'
+require 'user.misc'
 require 'user.treesitter'
-require 'user.lsp'
 require 'user.whichkey'
+require 'user.lsp'
 require 'user.telescope'
-require 'user.undotree'
+-- require 'user.undotree' -- merge into whichkey?
 require 'user.grepper'
-require 'user.bqf'
 require 'user.workspaces'
 require 'user.lint'
+require 'user.snippets'
+require 'user.wiki'
 
 -- TODO should guard this with 'does colorscheme exist'
 vim.cmd("colorscheme zenburn")
+
+if vim.g.neovide then
+  require 'user.neovide'
+end
