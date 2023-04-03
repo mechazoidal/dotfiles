@@ -78,6 +78,12 @@ wk.register({
   ['jj'] = {[[<ESC>]], "exit insert mode"},
 }, {mode = "i"})
 
+-- Manual keymap binds for ':' commands
+-- (changing ':' through which-key "hides" the cmdline until another key is pressed)
+vim.keymap.set('n', ';', ':')
+vim.keymap.set('n', '<leader>G', ':Git ')
+
+
 -- TRIAL
 -- https://old.reddit.com/r/vim/comments/2mj7w7/vim_and_kinesis_advantage_pro/cm5gqcg/
 -- wk.register({

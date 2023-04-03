@@ -6,6 +6,7 @@ require('lint').linters_by_ft = {
   -- ruby = {'ruby'},
   python = {'flake8',},
   yaml = {'yamllint',},
+  json = {'jsonlint',},
 }
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
   callback = function()

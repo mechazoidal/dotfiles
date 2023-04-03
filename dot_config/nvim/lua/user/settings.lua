@@ -44,7 +44,8 @@ vim.opt.spelllang:prepend("en_us")
 vim.opt.wildmode:prepend('longest:full')
 vim.opt.wildignore:prepend('*.dll,*.o,*.pyc,*.bak,*.exe,*.jpg,*.jpeg,*.png,*.gif,*$py.class,*.class')
 
-vim.o.clipboard = 'unnamedplus'
+-- :help provider-clipboard 
+-- vim.o.clipboard = 'unnamedplus'
 -- FIXME needs to be config'd special on windows
 -- vim.o.clipboard = 'unnamed,unnamedplus'
 
@@ -57,3 +58,12 @@ vim.g.maplocalleader = ' '
 -- " change all fancy characters to their ascii equivs(", ', etc.)
 -- " from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc#L615
 -- function! RemoveFancyCharacters()
+
+local vimrc_group = vim.api.nvim_create_augroup('vimrc', { clear = true })
+
+-- Save all on focus lost
+vim.api.nvim_create_autocmd({ "FocusLost" }, {
+  pattern = {"*"},
+  group = vimrc_group,
+  command = "wall"
+})

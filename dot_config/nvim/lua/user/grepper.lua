@@ -2,7 +2,7 @@ local wk = require("which-key")
 wk.register({
   -- TODO move under leader-g ?
   ["<leader>"] = {
-      r = {[[:Grepper -tool rg<cr>]], "Grepper: ripgrep"},
+      rg = {[[:Grepper -tool rg<cr>]], "Grepper: ripgrep"},
   },
 })
 

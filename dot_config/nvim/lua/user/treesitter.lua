@@ -12,6 +12,7 @@ require'nvim-treesitter.configs'.setup {
     "jsonnet",
     "lua",
     "make",
+    "markdown",
     "python",
     "regex",
     "ruby",
@@ -24,6 +25,7 @@ require'nvim-treesitter.configs'.setup {
 
   highlight = {
     enable = true,
+    additional_vim_regex_highlighting = { "markdown" }
   },
   -- incremental_selection = {
   --   enable = true,

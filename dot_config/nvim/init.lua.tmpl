@@ -1,4 +1,3 @@
-
 local Plug = vim.fn['plug#']
 
 -- The core fzf plugin needs to be loaded BEFORE anything else using fzf.vim
@@ -32,8 +31,8 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'junegunn/fzf.vim'
 Plug 'kevinhwang91/nvim-bqf'
 Plug 'natecraddock/workspaces.nvim'
-Plug 'vimwiki/vimwiki'
-Plug 'ElPiloto/telescope-vimwiki.nvim'
+-- Plug 'vimwiki/vimwiki'
+-- Plug 'ElPiloto/telescope-vimwiki.nvim'
 Plug 'mfussenegger/nvim-lint'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
@@ -43,7 +42,16 @@ Plug 'aklt/plantuml-syntax'
 {{ include (joinPath .chezmoi.homeDir ".config" "nvim" (join "_" (list "plugins" .chezmoi.hostname))) }}
 {{ end -}}
 
+Plug('tpope/vim-dispatch')
 vim.call('plug#end')
+
+{{- if eq .osid "darwin" }}
+vim.g.python3_host_prog = "/opt/local/bin/python3"
+{{- else if eq .osid "linux-nixos" }}
+vim.g.python3_host_prog = "{{ output "nix-build" "<nixpkgs>" "--no-build-output" "-A" "python3" | trim }}"
+{{- else }}
+vim.g.python3_host_prog = "/usr/bin/python3"
+{{- end }}
 
 {{ if stat (joinPath .chezmoi.homeDir ".config" "nvim" (join "_" (list "settings" .chezmoi.hostname))) }}
 {{ include (joinPath .chezmoi.homeDir ".config" "nvim" (join "_" (list "settings" .chezmoi.hostname))) }}
