@@ -1,0 +1,3 @@
+Plug 'hashivim/vim-terraform'
+Plug 'jvirtanen/vim-hcl'
+Plug 'aklt/plantuml-syntax'
