@@ -13,6 +13,8 @@ let g:rooter_change_directory_for_non_project_files = 'current'
 " vim-grepper
 runtime plugin/grepper.vim
 let g:grepper.rg.grepprg .= ' --smart-case'
+" despite setting this , operator will use 'git grep' inside ANY repo
+" possibly due to interaction of vim-rooter and grepper with changing lcd/cd: https://github.com/mhinz/vim-grepper/issues/189
 let g:grepper.operator.prompt = 1
 let g:grepper.operator.tool = 'rg'
 " mappings
@@ -24,30 +26,6 @@ nmap gs  <plug>(GrepperOperator)
 xmap gs  <plug>(GrepperOperator)
 let g:grepper.dir = 'repo,filecwd'
 
-
-" vimwiki
-let g:vimwiki_use_calendar = 1
-let g:vimwiki_url_maxsave = 0
-let diary_wiki = {}
-let diary_wiki.path = '~/personalwiki'
-let diary_wiki.auto_tags = 1
-let diary_wiki.auto_diary_index = 1
-let notes_wiki = {}
-let notes_wiki.path = '~/notewiki'
-let notes_wiki.auto_tags = 1
-let g:vimwiki_list = [diary_wiki, notes_wiki]
-let g:vimwiki_table_mappings = 0
-function SetExtraVimwikiMappings()
-  nnoremap <silent> <leader>m :VimwikiToggleListItem<CR>
-  vnoremap <silent> <leader>m :VimwikiToggleListItem<CR>
-endfunction()
-
-augroup filetype_vimwiki
-  autocmd!
-  " autocmd FileType vimwiki call SetExtraVimwikiMappings()
-  autocmd FileType vimwiki nnoremap <buffer> <silent> <leader>m :VimwikiToggleListItem<CR>
-  autocmd FileType vimwiki vnoremap <buffer> <silent> <leader>m :VimwikiToggleListItem<CR>
-augroup END
 
 " zeal
 " TODO investigate investigate.vim
@@ -63,8 +41,8 @@ augroup END
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(FindRootDirectory(), fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
 
-" Open fuzzy-search, leave a space for faster typing of search path
-nnoremap <Leader>f :Files 
+" Open fuzzy-search
+nnoremap <Leader>f :Files <cr>
 
 " Fuzzy-search for current Git files
 nnoremap <Leader>g :GFiles<cr>
@@ -219,16 +197,17 @@ let g:UltiSnipsSnippetDirectories=["ultisnips", "splunksnippets"]
 " dense-analysis/ale
 " let LanguageClient-neovim handle LSP
 let g:ale_disable_lsp = 1
-let g:ale_linters = {'go': ['golangci-lint'],
-      \              'rust': ['cargo','analyzer']}
-" let g:ale_linters_ignore = {'go': ['pylint']}
+let g:ale_fixers = {'go': ['goimports']}
+let g:ale_linters = {'go': ['golangci-lint', 'gofumpt', 'goimports'],
+      \              'rust': ['cargo','analyzer'],
+      \              'perl': ['perl', 'perlcritic', 'perltidy']}
+let g:ale_linters_ignore = {'ruby': ['rubocop']}
 " let g:ale_go_golangci_lint_options = '-c PATH'
 " let g:ale_go_golangci_lint_options = ''
 " let g:ale_go_golangci_lint_options = '--fast'
-let g:ale_go_golangci_lint_options = '--fast --presets bugs,format,style,unused --disable godot,unused,lll,wsl' "'-c PATH'
-let g:ale_go_golangci_lint_package = 1
-
-" arp242/gopher.vim REMOVED
+" let g:ale_go_golangci_lint_options = '--fast --presets bugs,format,style,unused --disable godot,unused,lll,wsl' "'-c PATH'
+" let g:ale_go_golangci_lint_package = 1
+let g:ale_perl_perlcritic_executable = 'perlcritic-5.34'
 
 " tpope/vim-projectionist
 " let l:proj_json = readfile("~/.vim/plugin/projections.json")
@@ -237,3 +216,13 @@ let g:ale_go_golangci_lint_package = 1
  let g:projectionist_heuristics = {
        \  ".git/|.git": {}
        \ }
+
+augroup filetype_ruby
+  autocmd!
+  autocmd FileType ruby let &l:formatprg = 'rubyfmt'
+augroup END
+" dispatch
+augroup dispatch_maps
+  autocmd!
+  autocmd FileType go let b:dispatch = 'go build'
+augroup END

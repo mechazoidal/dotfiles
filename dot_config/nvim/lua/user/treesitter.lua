@@ -6,6 +6,7 @@ require'nvim-treesitter.configs'.setup {
     "dot",
     "go",
     "gomod",
+    "gosum",
     "hcl",
     "javascript",
     "json",

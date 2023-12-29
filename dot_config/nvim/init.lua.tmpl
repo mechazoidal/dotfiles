@@ -1,7 +1,7 @@
 local Plug = vim.fn['plug#']
 
 -- The core fzf plugin needs to be loaded BEFORE anything else using fzf.vim
-{{- if eq .osid "darwin" }}
+{{- if (eq .chezmoi.os "darwin") }}
 vim.cmd('so ' .. vim.fs.normalize('/opt/local/share/fzf/vim/plugin/fzf.vim'))
 {{- else if eq .osid "linux-nixos" }}
 vim.cmd('so ' .. vim.fs.normalize('{{ output "nix-build" "<nixpkgs>" "--no-build-output" "-A" "fzf" | trim }}/share/vim-plugins/fzf/plugin/fzf.vim'))
@@ -24,7 +24,7 @@ Plug 'folke/which-key.nvim'
 Plug 'mbbill/undotree'
 Plug 'mhinz/vim-grepper'
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = vim.fn[':TSUpdate']})
-Plug('nvim-telescope/telescope.nvim', {tag = '0.1.0'})
+Plug('nvim-telescope/telescope.nvim', {tag = '0.1.4'})
 Plug 'nvim-telescope/telescope-fzf-native.nvim'
 -- TODO might be better to copy specific LS setup blocks into this config to use new autocmds
 Plug 'neovim/nvim-lspconfig'
@@ -38,11 +38,11 @@ Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'aklt/plantuml-syntax'
+Plug 'tpope/vim-dispatch'
 {{ if stat (joinPath .chezmoi.homeDir ".config" "nvim" (join "_" (list "plugins" .chezmoi.hostname))) }}
 {{ include (joinPath .chezmoi.homeDir ".config" "nvim" (join "_" (list "plugins" .chezmoi.hostname))) }}
 {{ end -}}
 
-Plug('tpope/vim-dispatch')
 vim.call('plug#end')
 
 {{- if eq .osid "darwin" }}

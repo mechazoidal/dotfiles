@@ -12,6 +12,32 @@ set rtp+=/opt/local/share/fzf/vim/
 set rtp+=/usr/local/share/vim/vimfiles
 {{- end }}
 
+" https://github.com/vimwiki/vimwiki/issues/935
+" vimwiki settings must now be defined BEFORE it's loaded
+" vimwiki
+let g:vimwiki_use_calendar = 1
+let g:vimwiki_url_maxsave = 0
+let diary_wiki = {}
+let diary_wiki.path = '~/personalwiki'
+let diary_wiki.auto_tags = 1
+let diary_wiki.auto_diary_index = 1
+let notes_wiki = {}
+let notes_wiki.path = '~/notewiki'
+let notes_wiki.auto_tags = 1
+let g:vimwiki_list = [diary_wiki, notes_wiki]
+let g:vimwiki_table_mappings = 0
+function SetExtraVimwikiMappings()
+  nnoremap <silent> <leader>m :VimwikiToggleListItem<CR>
+  vnoremap <silent> <leader>m :VimwikiToggleListItem<CR>
+endfunction()
+
+augroup filetype_vimwiki
+  autocmd!
+  " autocmd FileType vimwiki call SetExtraVimwikiMappings()
+  autocmd FileType vimwiki nnoremap <buffer> <silent> <leader>m :VimwikiToggleListItem<CR>
+  autocmd FileType vimwiki vnoremap <buffer> <silent> <leader>m :VimwikiToggleListItem<CR>
+augroup END
+
 " PLUGINS: LOAD
 " (vim-plug standard path: ~/.vim/autoload/plug.vim)
 call plug#begin('~/.vim/plugged')
@@ -52,15 +78,14 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'vim-scripts/scratch.vim'
-" https://github.com/vimwiki/vimwiki/issues/1286
-Plug 'vimwiki/vimwiki', { 'tag': '4d7a4da'}
+Plug 'vimwiki/vimwiki'
 Plug 'dense-analysis/ale'
 Plug 'AndrewRadev/bufferize.vim'
 Plug 'markonm/traces.vim'
 Plug 'mattn/emmet-vim'
-{{ if (stat (list ".vim/plugins" .chezmoi.hostname | join "_")) }}
-{{ include (list "dot_vim/plugins" .chezmoi.hostname | join "_") }}
-{{ end }}
+{{ if stat (joinPath .chezmoi.homeDir ".vim" (join "_" (list "plugins" .chezmoi.hostname))) }}
+{{ include (joinPath .chezmoi.homeDir ".vim" (join "_" (list "plugins" .chezmoi.hostname))) }}
+{{ end -}}
 call plug#end()
 
 " syntax highlighting, keep existing color settings

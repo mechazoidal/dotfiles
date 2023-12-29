@@ -1,6 +1,28 @@
-# add the 'web' type from examples
+# taken from rg examples
 --type-add
 web:*.{html,css,js}*
+
+# Terraform JSON Configuration Syntax
+# https://www.terraform.io/language/syntax/json
+--type-add
+tf:*.tf.json
+
+# Terraform Statefile
+# (mostly so they can be excluded with -T)
+--type-add
+tfstate:*.tfstate
+
+# Terraform Configuration Language
+--type-add
+hcl:*.hcl
+
+# HTTP Archive
+--type-add
+har:*.har
+
+# Tab-Separated Value
+--type-add
+tsv:*.tsv
 
 # always use the smart-case/-S option by default
 --smart-case

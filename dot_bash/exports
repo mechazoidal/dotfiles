@@ -3,3 +3,6 @@ export HISTIGNORE="&:ls:[bf]g:exit"
 
 # ensure gdb has a central history file
 export GDBHISTFILE="~/.gdb_history"
+
+# don't need _that_ much less(1) history
+export LESSHISTSIZE=10

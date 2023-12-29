@@ -4,6 +4,7 @@
 	email = {{ .email }}
 [push]
 	default = matching
+	followTags = true
 [core]
 	autocrlf = input
 	ignorecase = false
@@ -43,6 +44,13 @@
 # List ages of last commit on all remote and local branches
 	bar = !git branch -rvv --format='%(committerdate:iso8601), %(committerdate:relative) - %(refname:short)' | sort
 	bal = !git branch -vv --format='%(committerdate:iso8601), %(committerdate:relative) - %(refname:short)' | sort
-{{- if (stat ( joinPath ".config/git" .chezmoi.hostname )) }}
-{{ include ( joinPath "dot_config/git" .chezmoi.hostname ) }}
+# default branch name of origin repo, regardless of local changes
+	dn = !basename $(git ls-remote --symref origin HEAD 2> /dev/null | awk '/^ref:/ {print $2}')
+# checkout the default branch of repo(master/main/etc.)
+	com = !git switch $(git dn)
+# TODO guard against using this if on default branch, but that requires an if()!
+	pob = !git push -u origin "$(git rev-parse --abbrev-ref HEAD)"
+
+{{- if stat ( joinPath .chezmoi.homeDir ".config" "git" .chezmoi.hostname ) }}
+{{ include ( joinPath .chezmoi.homeDir ".config" "git" .chezmoi.hostname ) }}
 {{ end -}}
