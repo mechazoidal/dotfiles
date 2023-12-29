@@ -7,12 +7,15 @@ self: super:
     name = "mecha-creative";
     paths =  [
       audacity
-      avidemux
+      # avidemux # 23.11 : 'marked as broken'
       blender
       dvdauthor
       dvdbackup
+      gifski
+      libheif
       glxinfo
       #glimpse
+      gimp-with-plugins
       gst_all_1.gstreamer
       handbrake
       libdvdcss

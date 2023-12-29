@@ -5,6 +5,7 @@ self: super:
   mecha-core = with super.pkgs; super.buildEnv {
     name = "mecha-core";
     paths =  [
+      afew
       age
       # ark # kde qt5 breezedecoration
       bat
@@ -13,17 +14,21 @@ self: super:
       direnv
       doxygen
       fd
-      ffmpeg
+      # ffmpeg
+      ffmpeg_6-full
+      # ffmpegthumbs # kde qt5 breezedecoration
       fzf
       graphviz
       git
       jq
+      isync
       neovim
       niv
       nmap
       mercurial
       mpv
       mumble
+      notmuch
       #nixos.openssl
       openssl
       parallel

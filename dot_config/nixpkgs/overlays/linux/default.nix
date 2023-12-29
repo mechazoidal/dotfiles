@@ -11,7 +11,7 @@ self: super:
       chromium
       deadpixi-sam-unstable
       ddrescue
-      perl534Packages.ImageExifTool
+      perl536Packages.ImageExifTool
       f3
       firefox
       filezilla
@@ -58,7 +58,8 @@ self: super:
       xcape
       xclip
       xsel
-      yubioath-desktop
+      # yubioath-desktop
+      yubioath-flutter
       yubico-piv-tool
     ];
   };
